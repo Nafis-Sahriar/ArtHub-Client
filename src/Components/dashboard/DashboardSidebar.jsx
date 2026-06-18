@@ -31,8 +31,9 @@ export const DashboardSidebar = () => {
     ];
 
     const artistNavLinks = [
-        { icon: LayoutDashboard, href: "/dashboard/artist", label: "Manage Artworks" },
-        { icon: PlusCircle, href: "/dashboard/artist/add", label: "Add Artwork" },
+        { icon: LayoutDashboard, href: "/dashboard/artist", label: "Artist Home" },
+        { icon: LayoutDashboard, href: "/dashboard/artist/arts", label: "My Artworks" },
+        { icon: PlusCircle, href: "/dashboard/artist/arts/new", label: "Add Artwork" },
         { icon: History, href: "/dashboard/artist/sales", label: "Sales History" },
         { icon: Person, href: "/dashboard/artist/profile", label: "Profile Settings" },
     ];

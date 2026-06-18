@@ -1,4 +1,5 @@
 'use client';
+import StatsCards from '@/Components/dashboard/StatsCard';
 import { useSession } from '@/lib/auth-client';
 import React from 'react';
 
@@ -19,6 +20,10 @@ const ArtistHomePage = () => {
             <p className="text-lg text-gray-600">
                 This is your artist dashboard where you can manage your artworks, view sales history, and update your profile.
             </p>
+            <div className="mt-6">
+                <StatsCards user={user} />
+            </div>
+            
         </div>
     );
 };
