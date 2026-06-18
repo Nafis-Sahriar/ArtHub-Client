@@ -2,27 +2,44 @@
 import React from 'react';
 import { Table, Chip, Button, Tooltip } from "@heroui/react";
 import { Eye, Edit2, Trash2, Image as ImageIcon } from "lucide-react"; 
+import { useRouter } from "next/navigation";
+import { deleteArtwork } from "@/lib/actions/artworks";
+import toast from "react-hot-toast";
 
 const ArtworksTable = ({ artworks }) => {
 
-    // Action Handlers
+    const router = useRouter();
+
+    
     const handleView = (id) => {
-        console.log(`View button clicked for artwork ${id}. Will be implemented later.`);
+        router.push(`/dashboard/artist/arts/${id}`);
     };
 
     const handleEdit = (id) => {
-        console.log(`Edit button clicked for artwork ${id}. Will be implemented later.`);
+        router.push(`/dashboard/artist/arts/${id}/edit`);
     };
 
-    const handleDelete = (id) => {
-        console.log(`Delete button clicked for artwork ${id}. Will be implemented later.`);
+    const handleDelete = async (id) => {
+     
+        const isConfirmed = window.confirm("Are you sure you want to delete this artwork? This action cannot be undone.");
+        
+        if (isConfirmed) {
+            const loadingToast = toast.loading("Deleting artwork...");
+            try {
+                await deleteArtwork(id); 
+                toast.success("Artwork deleted successfully", { id: loadingToast });
+            } catch (error) {
+                console.error(error);
+                toast.error("Failed to delete artwork", { id: loadingToast });
+            }
+        }
     };
 
-    // Helper to determine status chip coloring based on brand colors
+    
     const getStatusColor = (status) => {
         switch (status?.toLowerCase()) {
             case 'available':
-                return 'success'; // Usually green in HeroUI
+                return 'success';
             case 'sold':
                 return 'secondary';
             default:
@@ -60,7 +77,7 @@ const ArtworksTable = ({ artworks }) => {
                         {artworks.map((art) => (
                             <Table.Row key={art._id}>
                                 
-                                {/* Artwork Details (Thumbnail + Title) */}
+                                
                                 <Table.Cell>
                                     <div className="flex items-center gap-4">
                                         <div className="h-12 w-12 shrink-0 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center border border-[#CFE1B9]">
@@ -77,14 +94,14 @@ const ArtworksTable = ({ artworks }) => {
                                     </div>
                                 </Table.Cell>
 
-                                {/* Medium / Category */}
+                              
                                 <Table.Cell>
                                     <span className="text-sm font-medium text-gray-700 capitalize">
                                         {art.category}
                                     </span>
                                 </Table.Cell>
 
-                                {/* Price & Size */}
+                             
                                 <Table.Cell>
                                     <div className="flex flex-col gap-0.5">
                                         <span className="text-sm font-bold text-[#718355]">${art.price}</span>
@@ -92,7 +109,7 @@ const ArtworksTable = ({ artworks }) => {
                                     </div>
                                 </Table.Cell>
 
-                                {/* Status */}
+                              
                                 <Table.Cell>
                                     <Chip 
                                         color={getStatusColor(art.status)} 
@@ -104,7 +121,7 @@ const ArtworksTable = ({ artworks }) => {
                                     </Chip>
                                 </Table.Cell>
 
-                                {/* Actions */}
+                          
                                 <Table.Cell>
                                     <div className="relative flex items-center gap-2">
                                         <Tooltip content="View Artwork">

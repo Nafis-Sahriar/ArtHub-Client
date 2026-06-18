@@ -5,15 +5,15 @@ import React from 'react';
 import ArtworksTable from './ArtworksTable';
 
 const ArtistArtsPage = async () => {
-    // 1. Fetch the real user session
+   
     const user = await getUserSession();
 
-    // 2. Security Check: Redirect to login if no session exists
+    
     if (!user) {
         redirect('/login');
     }
 
-    // 3. Role Check: Ensure only artists can access this page
+    
     if (user.role !== 'artist') {
         return (
             <div className="flex flex-col items-center justify-center py-20 text-center bg-red-50 rounded-3xl border border-red-200 mt-6">
@@ -25,7 +25,7 @@ const ArtistArtsPage = async () => {
         );
     }
 
-    // 4. Extract the real artist ID from the session and fetch their specific artworks
+    
     const artistId = user.id; 
     const artworks = await getArtistArtworks(artistId); 
 
@@ -36,7 +36,7 @@ const ArtistArtsPage = async () => {
                 <p className="text-sm text-[#97A97C]">View, update, and manage your current portfolio.</p>
             </div>
             
-            {/* Pass the dynamically fetched artworks to your client table */}
+    
             <ArtworksTable artworks={artworks} />
             
         </div>

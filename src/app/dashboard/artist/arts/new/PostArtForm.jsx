@@ -14,27 +14,35 @@ import {
 } from "@heroui/react";
 import { Palette, ImagePlus, DollarSign, Ruler, HelpCircle, X } from "lucide-react";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { createArtwork } from "@/lib/actions/artworks";
+import { redirect, useRouter } from "next/navigation";
+import { createArtwork, updateArtwork } from "@/lib/actions/artworks"; // Added updateArtwork
 
-const PostArtForm = ({ artist }) => {
+const PostArtForm = ({ artist, initialData = null }) => { // Added initialData
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [imagePreview, setImagePreview] = useState(null);
   
-  // NEW: Store the actual file object securely in React state
+  // Set initial image preview if editing
+  const [imagePreview, setImagePreview] = useState(initialData?.imageUrl || null);
   const [imageFile, setImageFile] = useState(null); 
   
   const router = useRouter();
 
+  // Helper to split "100 x 200 cm" back into width and height for the edit form
+  const parseDimensions = (dimString) => {
+      if (!dimString) return { width: "", height: "" };
+      const parts = dimString.replace(' cm', '').split(' x ');
+      return { width: parts[0] || "", height: parts[1] || "" };
+  };
+  const currentDims = parseDimensions(initialData?.dimensions);
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setImageFile(file); // Save the file to state immediately
+      setImageFile(file); 
       const previewUrl = URL.createObjectURL(file);
       setImagePreview(previewUrl);
     } else {
       setImageFile(null);
-      setImagePreview(null);
+      setImagePreview(initialData?.imageUrl || null); // Revert to old image if cancelled
     }
   };
 
@@ -42,8 +50,6 @@ const PostArtForm = ({ artist }) => {
     setImageFile(null);
     setImagePreview(null);
   };
-
-  console.log(artist);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,15 +59,14 @@ const PostArtForm = ({ artist }) => {
       const formData = new FormData(e.target);
       const artData = Object.fromEntries(formData.entries());
       
-      let uploadedImageUrl = "";
+      // Default to the existing image URL if we are editing and didn't pick a new one
+      let uploadedImageUrl = initialData?.imageUrl || "";
 
-      
+      // Only upload to ImgBB if a NEW file was explicitly selected
       if (imageFile && imageFile.name && imageFile.size > 0) {
         const loadingToast = toast.loading("Uploading artwork image to ImgBB...");
-        
         const imgData = new FormData();
         imgData.append("image", imageFile); 
-
         const imgbbKey = process.env.NEXT_PUBLIC_IMAGE_UPLOAD_API; 
         
         const imgRes = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbKey}`, {
@@ -70,7 +75,6 @@ const PostArtForm = ({ artist }) => {
         });
         
         const imgResult = await imgRes.json();
-        
         toast.dismiss(loadingToast);
 
         if (imgResult.success) {
@@ -78,42 +82,47 @@ const PostArtForm = ({ artist }) => {
         } else {
           throw new Error("Failed to upload image to ImgBB");
         }
-      } else {
+      } else if (!uploadedImageUrl) {
         throw new Error("Please select an image for your artwork.");
       }
 
-     const payload = {
+      const payload = {
         title: artData.title,
         category: artData.category,
         description: artData.description,
         price: Number(artData.price),
         dimensions: `${artData.width} x ${artData.height} cm`,
         imageUrl: uploadedImageUrl,
-        
-        // FIXED: Safely grab the ID whether it's named 'id' or '_id'
-        artistId: artist?.id || artist?._id, 
+        artistId: artist?.id || artist?._id,
         artistName: artist?.name,
         artistEmail: artist?.email,
-        status: "available",
-        createdAt: new Date().toISOString(),
+        status: initialData?.status || "available", // Keep existing status if editing
       };
 
-      console.log("Ready to send to backend:", payload);
-
-
-      const res= await createArtwork(payload);
-      if(res.insertedId) {
-        toast.success("Artwork published successfully!");
-        router.push("/dashboard/artist");
-      } else {        
-        toast.error("Failed to create artwork. Please try again.");
+      if (initialData) {
+        // UPDATE MODE
+       const res = await updateArtwork(initialData._id, payload);
+        if (res.success) {
+            toast.success("Artwork updated successfully!");
+            // Use router.push() inside Client Components!
+            router.push('/dashboard/artist/arts'); 
+        } else {
+            throw new Error("Failed to update artwork.");
+        }
+      } else {
+        // CREATE MODE
+        payload.createdAt = new Date().toISOString();
+        const res = await createArtwork(payload);
+        if (res.insertedId) {
+          toast.success("Artwork published successfully!");
+          e.target.reset();
+          setImageFile(null);
+          setImagePreview(null);
+          router.push("/dashboard/artist/arts");
+        } else {        
+          throw new Error("Failed to create artwork.");
+        }
       }
-
-      
-      e.target.reset();
-      setImageFile(null);
-      setImagePreview(null);
-      
 
     } catch (error) {
       console.error(error);
@@ -128,26 +137,26 @@ const PostArtForm = ({ artist }) => {
 
       <div className="mb-8 px-2">
         <h2 className="text-3xl font-bold tracking-tight text-[#718355]">
-          Add New Artwork
+          {initialData ? "Edit Artwork" : "Add New Artwork"}
         </h2>
         <p className="mt-2 text-sm text-[#97A97C]">
-          Showcase your latest creation to collectors worldwide.
+          {initialData ? "Update the details of your masterpiece." : "Showcase your latest creation to collectors worldwide."}
         </p>
         
         <div className="mt-4">
-            {artist?.status.toLowerCase() === "approved" ? (
+            {artist?.status?.toLowerCase() === "approved" || artist?.role === "artist" ? (
                 <Chip className="bg-[#E9F5DB] text-[#718355] font-semibold border border-[#CFE1B9]">
                     Verified Artist
                 </Chip>
             ) : (
                 <Chip className="bg-yellow-100 text-yellow-700 font-semibold border border-yellow-200">
-                    {artist?.status || "Pending Approval"}
+                    Pending Approval
                 </Chip>
             )}
         </div>
       </div>
 
-      {artist?.status.toLowerCase() === "approved" ? (
+      {artist?.status?.toLowerCase() === "approved" || artist?.role === "artist" ? (
         <Form className="space-y-6" onSubmit={handleSubmit}>
 
           <div className="w-full rounded-3xl border border-[#CFE1B9]/50 bg-white p-6 md:p-8 shadow-sm transition-all hover:shadow-md">
@@ -161,13 +170,19 @@ const PostArtForm = ({ artist }) => {
             </div>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <TextField name="title" isRequired>
-                <Label className="text-sm font-semibold text-gray-700">Artwork Title</Label>
-                <Input placeholder="e.g. Starry Night Recreation" className="rounded-xl border-[#CFE1B9] focus-within:border-[#718355]" />
-                <FieldError />
-              </TextField>
+             <TextField name="title" isRequired defaultValue={initialData?.title}>
+  <Label className="text-sm font-semibold text-gray-700">Artwork Title</Label>
+  {/* Removed defaultValue from here! */}
+  <Input placeholder="e.g. Starry Night Recreation" className="rounded-xl border-[#CFE1B9] focus-within:border-[#718355]" />
+  <FieldError />
+</TextField>
 
-              <Select name="category" placeholder="Select Medium" isRequired>
+              <Select 
+                name="category" 
+                placeholder="Select Medium" 
+                isRequired 
+                defaultValue={initialData ? [initialData.category] : []}
+              >
                 <Label className="text-sm font-semibold text-gray-700">Medium / Category</Label>
                 <Select.Trigger className="rounded-xl border-[#CFE1B9]">
                   <Select.Value />
@@ -185,15 +200,16 @@ const PostArtForm = ({ artist }) => {
                 <FieldError />
               </Select>
 
-              <TextField name="description" className="md:col-span-2" isRequired>
-                <Label className="text-sm font-semibold text-gray-700">Description & Inspiration</Label>
-                <TextArea
-                  className="rounded-xl border-[#CFE1B9]"
-                  placeholder="Share the story, inspiration, and techniques behind this piece..."
-                  rows={4}
-                />
-                <FieldError />
-              </TextField>
+             <TextField name="description" className="md:col-span-2" isRequired defaultValue={initialData?.description}>
+  <Label className="text-sm font-semibold text-gray-700">Description & Inspiration</Label>
+  {/* Removed defaultValue from here! */}
+  <TextArea
+    className="rounded-xl border-[#CFE1B9]"
+    placeholder="Share the story, inspiration, and techniques behind this piece..."
+    rows={4}
+  />
+  <FieldError />
+</TextField>
             </div>
           </div>
 
@@ -208,17 +224,17 @@ const PostArtForm = ({ artist }) => {
             </div>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <TextField name="width" type="number" isRequired>
-                <Label className="text-sm font-semibold text-gray-700">Width (cm)</Label>
-                <Input type="number" placeholder="e.g. 60" min="1" className="rounded-xl border-[#CFE1B9]" />
-                <FieldError />
-              </TextField>
+             <TextField name="width" type="number" isRequired defaultValue={currentDims.width}>
+  <Label className="text-sm font-semibold text-gray-700">Width (cm)</Label>
+  <Input type="number" placeholder="e.g. 60" min="1" className="rounded-xl border-[#CFE1B9]" />
+  <FieldError />
+</TextField>
 
-              <TextField name="height" type="number" isRequired>
-                <Label className="text-sm font-semibold text-gray-700">Height (cm)</Label>
-                <Input type="number" placeholder="e.g. 90" min="1" className="rounded-xl border-[#CFE1B9]" />
-                <FieldError />
-              </TextField>
+<TextField name="height" type="number" isRequired defaultValue={currentDims.height}>
+  <Label className="text-sm font-semibold text-gray-700">Height (cm)</Label>
+  <Input type="number" placeholder="e.g. 90" min="1" className="rounded-xl border-[#CFE1B9]" />
+  <FieldError />
+</TextField>
             </div>
           </div>
 
@@ -233,11 +249,11 @@ const PostArtForm = ({ artist }) => {
             </div>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <TextField name="price" type="number" isRequired>
-                <Label className="text-sm font-semibold text-gray-700">Price (USD)</Label>
-                <Input type="number" placeholder="e.g. 250" min="1" className="rounded-xl border-[#CFE1B9]" />
-                <FieldError />
-              </TextField>
+           <TextField name="price" type="number" isRequired defaultValue={initialData?.price?.toString()}>
+  <Label className="text-sm font-semibold text-gray-700">Price (USD)</Label>
+  <Input type="number" placeholder="e.g. 250" min="1" className="rounded-xl border-[#CFE1B9]" />
+  <FieldError />
+</TextField>
             </div>
           </div>
 
@@ -252,7 +268,6 @@ const PostArtForm = ({ artist }) => {
             </div>
 
             <div className="grid grid-cols-1 gap-6">
-              {/* FIXED: Removed the name="image" wrapper field that was confusing FormData */}
               <div>
                 <Label className="text-sm font-semibold text-gray-700 mb-2 block">Upload High-Quality Image</Label>
                 
@@ -290,7 +305,7 @@ const PostArtForm = ({ artist }) => {
                     </label>
                   )}
                 </div>
-                {!imageFile && <p className="text-xs text-red-500 mt-2">Image is required.</p>}
+                {!imagePreview && <p className="text-xs text-red-500 mt-2">Image is required.</p>}
               </div>
             </div>
           </div>
@@ -298,10 +313,10 @@ const PostArtForm = ({ artist }) => {
           <div className="pt-4 pb-10">
             <Button
                 type="submit"
-                isDisabled={isSubmitting || !imageFile}
+                isDisabled={isSubmitting || !imagePreview}
                 className="w-full md:w-auto rounded-xl bg-[#718355] px-10 py-6 text-lg font-semibold text-white hover:bg-[#87986A] transition-colors shadow-lg shadow-[#718355]/20"
             >
-                {isSubmitting ? "Publishing Artwork..." : "Publish Artwork"}
+                {isSubmitting ? "Saving..." : (initialData ? "Save Changes" : "Publish Artwork")}
             </Button>
           </div>
 

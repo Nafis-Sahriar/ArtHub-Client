@@ -1,16 +1,15 @@
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
-export const serverMutation = async(path, data)=>{
+
+export const serverMutation = async (path, data, method = 'POST') => {
     const res = await fetch(`${baseURL}${path}`, {
-        method: 'POST',
+        method: method,
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        
+        body: data ? JSON.stringify(data) : undefined
     });
-
-    // I will handle errors in the future, for now I just want to see the response
-
 
     return res.json();
 }

@@ -1,20 +1,55 @@
 'use server'
 
 import { serverMutation } from "../core/server";
+import { revalidatePath } from 'next/cache';
 
-// Import your new core utility (adjust the path if your file is named differently)
+
+
 
 
 export const createArtwork = async (artworkData) => {
     try {
-        // serverMutation expects (path, data). 
-        // It already handles the POST method, headers, and JSON stringifying!
+  
         const data = await serverMutation('/api/artworks', artworkData);
         return data;
     } 
     catch (error) 
     {
         console.error("Error creating artwork:", error);
+        throw error;
+    }
+}
+
+
+
+export const updateArtwork = async (id, updatedData) => {
+    try {
+        const data = await serverMutation(`/api/artworks/${id}`, updatedData, 'PATCH');
+        
+       
+        revalidatePath('/dashboard/artist/arts');
+        revalidatePath(`/dashboard/artist/arts/${id}`);
+        
+        return data;
+    } 
+    catch (error) 
+    {
+        console.error("Error updating artwork:", error);
+        throw error;
+    }
+}
+
+export const deleteArtwork = async (id) => {
+    try {
+      
+        const data = await serverMutation(`/api/artworks/${id}`, null, 'DELETE');
+        
+      
+        revalidatePath('/dashboard/artist/arts'); 
+        
+        return data;
+    } catch (error) {
+        console.error("Error deleting artwork:", error);
         throw error;
     }
 }

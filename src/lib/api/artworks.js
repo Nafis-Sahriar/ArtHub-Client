@@ -22,3 +22,35 @@ export const getArtistArtworks = async(artistId, status="available") => {
         
     }
 }
+
+export const getArtworkById = async (id) => {
+    try {
+        
+        const res = await fetch(`${baseURL}/api/artworks/${id}`, {
+            cache: 'no-store'
+        });
+        
+        if (!res.ok) {
+            throw new Error(`Failed to fetch artwork details`);
+        }
+        
+        return await res.json();
+    } catch (error) {
+        console.error("Error fetching artwork by ID:", error);
+        return null; 
+    }
+}
+
+
+export const getAllAvailableArtworks = async () => {
+    try {
+        const res = await fetch(`${baseURL}/api/artworks?status=available`, {
+            cache: 'no-store' 
+        });
+        if (!res.ok) throw new Error("Failed to fetch public artworks");
+        return await res.json();
+    } catch (error) {
+        console.error("Error fetching available artworks:", error);
+        return [];
+    }
+}

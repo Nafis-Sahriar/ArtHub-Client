@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
-  // BetterAuth Session Data
+
   const { data: session, isPending, refetch } = authClient.useSession();
 
   const userData = session?.user;
@@ -20,7 +20,7 @@ const Navbar = () => {
     role: userData.role || 'buyer'
   } : null;
 
-  // Pure JavaScript initials extractor
+
   const getInitials = (name) => {
     if (!name) return "U";
     return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
@@ -37,13 +37,13 @@ const Navbar = () => {
     }
   };
 
-  // Standard public links
+
   const navLinks = [
     { label: 'Home', href: '/' },
-    { label: 'Browse Artworks', href: '/browse' },
+    { label: 'Browse Artworks', href: '/artworks' },
   ];
 
-  // Route mapping based on the role
+
   const dashboardLinks = {
     buyer: '/dashboard/user',
     artist: '/dashboard/artist',
@@ -53,17 +53,17 @@ const Navbar = () => {
   return (
     <nav className="sticky top-0 z-50 w-full py-4 transition-all duration-300">
       <div className="mx-auto w-[90%]">
-        {/* Main Glass Header Wrapper - Light Earthy Greens */}
+        
         <div className="flex h-16 items-center justify-between rounded-2xl border border-[#CFE1B9]/50 bg-[#E9F5DB]/80 px-6 shadow-sm backdrop-blur-xl transition-all duration-300 hover:border-[#97A97C]/50">
           
-          {/* Logo */}
+      
           <Link href="/" className="flex items-center">
             <h2 className="text-2xl font-bold tracking-tight text-[#718355]">
               ArtHub
             </h2>
           </Link>
 
-          {/* Desktop Navigation */}
+     
           <div className="hidden flex-1 items-center justify-end gap-10 lg:flex">
             {navLinks.map((link) => (
               <Link
@@ -75,7 +75,7 @@ const Navbar = () => {
               </Link>
             ))}
             
-            {/* Conditional Dashboard Link if logged in */}
+          
             {user && (
                <Link
                  href={dashboardLinks[user.role] || '/dashboard/user'}
@@ -86,7 +86,7 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Desktop Actions Section */}
+         
           <div className="hidden items-center gap-5 pl-10 lg:flex min-w-40 justify-end">
             {isPending ? (
               <span className="text-sm font-medium text-[#718355] animate-pulse">
@@ -95,10 +95,10 @@ const Navbar = () => {
             ) : user ? (
               <div className="flex items-center gap-4">
                 
-                {/* NEW HEROUI DROPDOWN IMPLEMENTATION */}
+            
                 <Dropdown>
                   <Dropdown.Trigger className="rounded-full cursor-pointer outline-none transition-transform hover:scale-105">
-                    {/* Replaced isBordered with Tailwind rings */}
+                 
                     <Avatar className="ring-2 ring-[#97A97C] ring-offset-2 ring-offset-[#E9F5DB]">
                       {user.imageUrl && (
                         <Avatar.Image alt={user.name || "User"} src={user.imageUrl} />
@@ -168,7 +168,7 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile Menu Toggle Button */}
+
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="flex items-center rounded-xl p-1.5 text-[#718355] transition-colors hover:bg-[#CFE1B9]/50 lg:hidden"
@@ -179,7 +179,7 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Flyout Menu Overlay Card */}
+       
         {isMenuOpen && (
           <div className="mt-3 rounded-2xl border border-[#CFE1B9]/50 bg-[#E9F5DB]/95 p-5 shadow-lg backdrop-blur-2xl lg:hidden">
             <div className="flex flex-col gap-4">
@@ -213,7 +213,7 @@ const Navbar = () => {
                   <div className="flex flex-col items-center gap-4">
                     <div className="flex items-center gap-3 w-full px-2">
                       
-                      {/* Fixed Mobile Avatar syntax */}
+                   
                       <Avatar className="h-10 w-10 ring-2 ring-[#97A97C]">
                         {user.imageUrl && (
                           <Avatar.Image alt={user.name || "User"} src={user.imageUrl} />
