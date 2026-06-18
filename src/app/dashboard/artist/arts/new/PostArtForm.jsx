@@ -43,6 +43,8 @@ const PostArtForm = ({ artist }) => {
     setImagePreview(null);
   };
 
+  console.log(artist);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -80,14 +82,16 @@ const PostArtForm = ({ artist }) => {
         throw new Error("Please select an image for your artwork.");
       }
 
-      const payload = {
+     const payload = {
         title: artData.title,
         category: artData.category,
         description: artData.description,
         price: Number(artData.price),
         dimensions: `${artData.width} x ${artData.height} cm`,
         imageUrl: uploadedImageUrl,
-        artistId: artist?._id,
+        
+        // FIXED: Safely grab the ID whether it's named 'id' or '_id'
+        artistId: artist?.id || artist?._id, 
         artistName: artist?.name,
         artistEmail: artist?.email,
         status: "available",

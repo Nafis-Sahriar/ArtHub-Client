@@ -1,18 +1,15 @@
 'use server'
 
-    const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000";
+import { serverMutation } from "../core/server";
+
+// Import your new core utility (adjust the path if your file is named differently)
 
 
-export const createArtwork = async(artworkData) => {
-    try{
-        const res = await fetch(`${baseURL}/api/artworks`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(artworkData)
-        });
-        const data = await res.json();
+export const createArtwork = async (artworkData) => {
+    try {
+        // serverMutation expects (path, data). 
+        // It already handles the POST method, headers, and JSON stringifying!
+        const data = await serverMutation('/api/artworks', artworkData);
         return data;
     } 
     catch (error) 
