@@ -1,25 +1,51 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Bars, Xmark } from '@gravity-ui/icons';
-import { Button, Avatar, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@heroui/react';
+import { Bars, Xmark, ArrowRightFromSquare, Gear } from '@gravity-ui/icons';
+import { Button, Avatar, Dropdown, Label } from '@heroui/react';
+import { authClient } from '@/lib/auth-client';
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
-  // Mock authentication state for frontend development
-  // Change this to 'true' to see the logged-in state and profile avatar!
-  const isLoggedIn = false; 
-  const userRole = 'user'; // Options: 'user', 'artist', 'admin'
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  // BetterAuth Session Data
+  const { data: session, isPending, refetch } = authClient.useSession();
 
-  // Standard public links based on ArtHub requirements
+  const userData = session?.user;
+  const user = userData ? {
+    name: userData.name,
+    email: userData.email,
+    imageUrl: userData.image,
+    role: userData.role || 'buyer'
+  } : null;
+
+  // Pure JavaScript initials extractor
+  const getInitials = (name) => {
+    if (!name) return "U";
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await authClient.signOut();
+      toast.success("Logged out successfully!");
+      refetch(); 
+    } catch (error) {
+      console.error("Sign Out Error:", error);
+      toast.error("Failed to log out.");
+    }
+  };
+
+  // Standard public links
   const navLinks = [
     { label: 'Home', href: '/' },
     { label: 'Browse Artworks', href: '/browse' },
   ];
 
+  // Route mapping based on the role
   const dashboardLinks = {
-    user: '/dashboard/user',
+    buyer: '/dashboard/user',
     artist: '/dashboard/artist',
     admin: '/dashboard/admin'
   };
@@ -50,9 +76,9 @@ const Navbar = () => {
             ))}
             
             {/* Conditional Dashboard Link if logged in */}
-            {isLoggedIn && (
+            {user && (
                <Link
-                 href={dashboardLinks[userRole]}
+                 href={dashboardLinks[user.role] || '/dashboard/user'}
                  className="text-sm font-medium text-[#718355] transition-colors duration-200 hover:text-[#97A97C]"
                >
                  Dashboard
@@ -62,31 +88,67 @@ const Navbar = () => {
 
           {/* Desktop Actions Section */}
           <div className="hidden items-center gap-5 pl-10 lg:flex min-w-40 justify-end">
-            {isLoggedIn ? (
+            {isPending ? (
+              <span className="text-sm font-medium text-[#718355] animate-pulse">
+                Loading...
+              </span>
+            ) : user ? (
               <div className="flex items-center gap-4">
-                <Dropdown placement="bottom-end">
-                  <DropdownTrigger>
-                    <Avatar 
-                      isBordered 
-                      as="button" 
-                      className="transition-transform border-[#97A97C] text-[#718355] bg-[#CFE1B9]" 
-                      name="User" 
-                      size="sm" 
-                    />
-                  </DropdownTrigger>
-                  <DropdownMenu aria-label="Profile Actions" variant="flat" className="text-[#718355]">
-                    <DropdownItem key="profile" className="h-14 gap-2">
-                      <p className="font-semibold">Signed in as</p>
-                      <p className="font-semibold">user@arthub.com</p>
-                    </DropdownItem>
-                    <DropdownItem key="dashboard" href={dashboardLinks[userRole]}>
-                      My Dashboard
-                    </DropdownItem>
-                    <DropdownItem key="logout" color="danger">
-                      Log Out
-                    </DropdownItem>
-                  </DropdownMenu>
+                
+                {/* NEW HEROUI DROPDOWN IMPLEMENTATION */}
+                <Dropdown>
+                  <Dropdown.Trigger className="rounded-full cursor-pointer outline-none transition-transform hover:scale-105">
+                    {/* Replaced isBordered with Tailwind rings */}
+                    <Avatar className="ring-2 ring-[#97A97C] ring-offset-2 ring-offset-[#E9F5DB]">
+                      {user.imageUrl && (
+                        <Avatar.Image alt={user.name || "User"} src={user.imageUrl} />
+                      )}
+                      <Avatar.Fallback className="bg-[#CFE1B9] text-[#718355] font-medium" delayMs={600}>
+                        {getInitials(user.name)}
+                      </Avatar.Fallback>
+                    </Avatar>
+                  </Dropdown.Trigger>
+                  
+                  <Dropdown.Popover className="border border-[#CFE1B9]/50 bg-[#F4F7F0] shadow-lg rounded-xl">
+                    <div className="px-4 pt-4 pb-2 border-b border-[#CFE1B9]/50">
+                      <div className="flex items-center gap-3">
+                        <Avatar size="sm">
+                          {user.imageUrl && (
+                            <Avatar.Image alt={user.name || "User"} src={user.imageUrl} />
+                          )}
+                          <Avatar.Fallback className="bg-[#CFE1B9] text-[#718355] text-xs font-medium" delayMs={600}>
+                            {getInitials(user.name)}
+                          </Avatar.Fallback>
+                        </Avatar>
+                        <div className="flex flex-col gap-0">
+                          <p className="text-sm leading-5 font-semibold text-[#718355]">{user.name}</p>
+                          <p className="text-xs leading-none text-[#97A97C]">{user.email}</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <Dropdown.Menu aria-label="Profile Actions" className="p-2">
+                      <Dropdown.Item id="dashboard" textValue="Dashboard" href={dashboardLinks[user.role] || '/dashboard/user'}>
+                        <Label className="text-[#718355] cursor-pointer w-full inline-block">Dashboard</Label>
+                      </Dropdown.Item>
+                      
+                      <Dropdown.Item id="settings" textValue="Settings">
+                        <div className="flex w-full items-center justify-between gap-4">
+                          <Label className="text-[#718355] cursor-pointer">Settings</Label>
+                          <Gear className="size-4 text-[#97A97C]" />
+                        </div>
+                      </Dropdown.Item>
+                      
+                      <Dropdown.Item id="logout" textValue="Logout" variant="danger" onClick={handleSignOut}>
+                        <div className="flex w-full items-center justify-between gap-4">
+                          <Label className="text-red-500 cursor-pointer">Log Out</Label>
+                          <ArrowRightFromSquare className="size-4 text-red-500" />
+                        </div>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown.Popover>
                 </Dropdown>
+
               </div>
             ) : (
               <>
@@ -132,9 +194,9 @@ const Navbar = () => {
                 </Link>
               ))}
 
-              {isLoggedIn && (
+              {user && (
                 <Link
-                  href={dashboardLinks[userRole]}
+                  href={dashboardLinks[user.role] || '/dashboard/user'}
                   onClick={() => setIsMenuOpen(false)}
                   className="text-base font-medium text-[#718355] transition-colors hover:text-[#97A97C]"
                 >
@@ -143,18 +205,35 @@ const Navbar = () => {
               )}
 
               <div className="mt-2 flex flex-col gap-3 border-t border-[#CFE1B9] pt-4">
-                {isLoggedIn ? (
+                {isPending ? (
+                  <span className="text-center text-sm font-medium text-[#718355] animate-pulse py-2">
+                    Loading...
+                  </span>
+                ) : user ? (
                   <div className="flex flex-col items-center gap-4">
                     <div className="flex items-center gap-3 w-full px-2">
-                      <Avatar className="h-10 w-10 border border-[#97A97C] bg-[#CFE1B9] text-[#718355] font-medium" name="User" />
+                      
+                      {/* Fixed Mobile Avatar syntax */}
+                      <Avatar className="h-10 w-10 ring-2 ring-[#97A97C]">
+                        {user.imageUrl && (
+                          <Avatar.Image alt={user.name || "User"} src={user.imageUrl} />
+                        )}
+                        <Avatar.Fallback className="bg-[#CFE1B9] text-[#718355] font-medium" delayMs={600}>
+                          {getInitials(user.name)}
+                        </Avatar.Fallback>
+                      </Avatar>
+
                       <div className="flex flex-col overflow-hidden">
-                        <span className="text-sm font-semibold text-[#718355] truncate">Art Enthusiast</span>
-                        <span className="text-xs text-[#97A97C] truncate">user@arthub.com</span>
+                        <span className="text-sm font-semibold text-[#718355] truncate">{user.name}</span>
+                        <span className="text-xs text-[#97A97C] truncate">{user.email}</span>
                       </div>
                     </div>
                     
                     <Button
-                      onClick={() => setIsMenuOpen(false)}
+                      onClick={() => {
+                        handleSignOut();
+                        setIsMenuOpen(false);
+                      }}
                       className="w-full rounded-xl border border-red-200 bg-red-50 text-red-500 hover:bg-red-100"
                     >
                       Log Out
@@ -170,14 +249,15 @@ const Navbar = () => {
                       Login
                     </Link>
 
-                    <Button
-                      as={Link}
-                      href="/register"
+                    <Link href="/register">
+                      <Button
                       onClick={() => setIsMenuOpen(false)}
                       className="w-full rounded-xl bg-[#718355] font-semibold text-white shadow-md shadow-[#718355]/20 hover:bg-[#87986A]"
                     >
                       Get Started
                     </Button>
+                    </Link>
+                  
                   </>
                 )}
               </div>
