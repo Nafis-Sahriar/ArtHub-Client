@@ -2,6 +2,7 @@ import { getUserSession } from '@/lib/core/session';
 import { getArtworkById } from '@/lib/api/artworks'; // Import your existing fetcher
 import { redirect } from 'next/navigation';
 import React from 'react';
+import BuynowForm from './BuynowForm';
 
 const BuyPage = async ({params}) => {
     const resolvedParams = await params;
@@ -49,10 +50,15 @@ const BuyPage = async ({params}) => {
     }
 
     return (
-        <div className="max-w-4xl mx-auto p-6">
+        <div className="w-full mx-auto p-6">
+          
+            <div className="mb-10 text-center">
             <h1 className="text-3xl font-bold mb-4">Secure Checkout</h1>
             <p className="mb-8">Purchasing: <strong>{artwork.title}</strong></p>
+            </div>
             
+            {/* Here is where your form will go! */}
+            <BuynowForm user={user} artwork={artwork} />
         </div>
     );
 };
