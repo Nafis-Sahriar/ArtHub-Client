@@ -117,15 +117,41 @@ const PublicArtworkDetails = async ({ params }) => {
                             ) : (
                                 // normal people er jonno render. Ekhan theke stripe e jabe. 
                                 
-                             <Link href={`/artworks/${artwork._id}/buy`} className="w-full">
-                                    <Button 
-                                        isDisabled={artwork.status !== 'available'}
-                                        className={`w-full py-8 text-lg font-bold rounded-2xl shadow-xl transition-all ${artwork.status === 'available' ? 'bg-[#718355] text-white hover:bg-[#5A6B42] hover:shadow-[#718355]/30' : 'bg-gray-200 text-gray-500'}`}
-                                    >
-                                        <ShoppingCart size={22} className="mr-2" /> 
-                                        {artwork.status === 'available' ? 'Buy Now' : 'Artwork Sold'}
+                         <>    
+                                <Link href={`/artworks/${artwork._id}/buy`} className="w-full">
+                                            <Button 
+                                                isDisabled={artwork.status !== 'available'}
+                                                className={`w-full py-8 text-lg font-bold rounded-2xl shadow-xl transition-all ${artwork.status === 'available' ? 'bg-[#718355] text-white hover:bg-[#5A6B42] hover:shadow-[#718355]/30' : 'bg-gray-200 text-gray-500'}`}
+                                            >
+                                                <ShoppingCart size={22} className="mr-2" /> 
+                                                {artwork.status === 'available' ? 'Buy Now' : 'Artwork Sold'}
+                                            </Button>
+
+
+
+                                            
+                                        </Link>
+
+                               {/* <form action='/api/payment' method='POST'>
+                                    <input type='hidden' name="price" value={artwork?.price} ></input>
+                                    <input type='hidden' name="title" value={artwork?.title} ></input>
+                                    <input type='hidden' name="productId" value={artwork?._id} ></input>
+
+                                     <Button 
+                                     type="submit"
+                                    isDisabled={artwork.status !== 'available'}
+                                    className={`w-full py-8 text-lg font-bold rounded-2xl shadow-xl transition-all ${artwork.status === 'available' ? 'bg-[#718355] text-white hover:bg-[#5A6B42] hover:shadow-[#718355]/30' : 'bg-gray-200 text-gray-500'}`}
+                                >
+                                    <ShoppingCart size={22} className="mr-2" /> 
+                                    {artwork.status === 'available' ? 'Buy Now' : 'Artwork Sold'}
                                     </Button>
-                                </Link>
+
+
+                               </form> */}
+
+
+
+                         </>
                             )}
                         </div>
 

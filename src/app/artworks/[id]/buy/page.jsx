@@ -7,8 +7,7 @@ import { getPurchasesByBuyer } from '@/lib/api/purchase';
 import Link from 'next/link';
 import { getPlanById } from '@/lib/api/plans';
 
-const BuyPage = async ({ params }) => 
-{
+const BuyPage = async ({ params }) => {
     const resolvedParams = await params;
     const id = resolvedParams.id;
 
@@ -17,33 +16,27 @@ const BuyPage = async ({ params }) =>
         getArtworkById(id)
     ]);
 
-    if (!user) 
-    {
+    if (!user) {
         redirect(`/login?redirect=/artworks/${id}/buy`);
     }
 
-    if (!artwork) 
-    {
+    if (!artwork) {
         return <div className="p-10 text-center text-red-600 font-bold">Artwork not found.</div>;
     }
 
-    if (artwork.status !== 'available')
-    {
+    if (artwork.status !== 'available') {
          return <div className="p-10 text-center text-gray-600 font-bold">Sorry, this artwork has already been sold!</div>;
     }
 
     const purchases = await getPurchasesByBuyer(user.id);
+    const plan = await getPlanById(user?.plan || 'buyer_free');
 
-    const plan= await getPlanById(user?.plan || 'buyer_free');
-    // console.log('User Plan Details:', plan1); 
-
-  
     const purchaseCount = purchases.length;
-    const isAtLimit = purchaseCount >= plan.maxPurchasesPerMonth;
+    
+    
+    const isAtLimit = !plan.isUnlimited && purchaseCount >= plan.maxPurchasesPerMonth;
 
-
-    if (user.id === artwork.artistId) 
-    {
+    if (user.id === artwork.artistId) {
         return (
             <div className="max-w-2xl mx-auto mt-10 w-full rounded-3xl border border-yellow-200 bg-yellow-50 p-10 text-center shadow-sm">
                 <h3 className="text-2xl font-bold text-yellow-800 mb-3">Wait!</h3>
@@ -58,7 +51,12 @@ const BuyPage = async ({ params }) =>
             <div className="bg-zinc-50 border border-zinc-200 rounded-2xl p-6 mb-10 flex justify-between items-center">
                 <span className="text-zinc-600 font-medium">Monthly usage</span>
                 <div className="text-xl font-black text-zinc-900">
-                    {purchaseCount} <span className="text-zinc-400 font-medium">/ {plan.maxPurchasesPerMonth}</span>
+                    {/* UPDATED UI: Conditionally render the limit or an "Unlimited" badge */}
+                    {plan.isUnlimited ? (
+                        <span className="text-[#718355]">Unlimited Access</span>
+                    ) : (
+                        <>{purchaseCount} <span className="text-zinc-400 font-medium">/ {plan.maxPurchasesPerMonth}</span></>
+                    )}
                 </div>
             </div>
           
@@ -68,7 +66,7 @@ const BuyPage = async ({ params }) =>
                         <h1 className="text-4xl font-extrabold text-zinc-900 mb-4">Secure Checkout</h1>
                         <p className="text-zinc-500">Purchasing: <strong className="text-zinc-900">{artwork.title}</strong></p>
                     </div>
-                    <BuynowForm user={user} artwork={artwork} />
+                    <BuynowForm artwork={artwork} />
                 </div>
             ) : (
                 <div className="max-w-xl mx-auto mt-10 rounded-3xl border border-red-200 bg-red-50 p-10 text-center shadow-sm">
@@ -77,11 +75,9 @@ const BuyPage = async ({ params }) =>
                         You&apos;ve reached your monthly limit of {plan.maxPurchasesPerMonth} artworks.
                     </p>
                     <Link href="/plans" className="text-red-600 font-bold hover:underline">
-                    
-                    <button className="bg-red-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-red-700 transition">
-                        View Premium Plans
-                    </button>
-                    
+                        <button className="bg-red-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-red-700 transition">
+                            View Premium Plans
+                        </button>
                     </Link>
                 </div>
             )}
