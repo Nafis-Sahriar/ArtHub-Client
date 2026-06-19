@@ -123,42 +123,48 @@ const ArtworksTable = ({ artworks }) => {
 
                           
                                 <Table.Cell>
-                                    <div className="relative flex items-center gap-2">
-                                        <Tooltip content="View Artwork">
-                                            <Button 
-                                                isIconOnly 
-                                                size="sm" 
-                                                variant="light" 
-                                                aria-label="View artwork details"
-                                                onClick={() => handleView(art._id)}
-                                            >
-                                                <Eye className="text-gray-500 w-4 h-4 hover:text-[#718355] transition-colors" />
-                                            </Button>
-                                        </Tooltip>
-                                        <Tooltip content="Edit Artwork">
-                                            <Button 
-                                                isIconOnly 
-                                                size="sm" 
-                                                variant="light" 
-                                                aria-label="Edit artwork"
-                                                onClick={() => handleEdit(art._id)}
-                                            >
-                                                <Edit2 className="text-gray-500 w-4 h-4 hover:text-[#718355] transition-colors" />
-                                            </Button>
-                                        </Tooltip>
-                                        <Tooltip content="Delete Artwork" color="danger">
-                                            <Button 
-                                                isIconOnly 
-                                                size="sm" 
-                                                variant="light" 
-                                                aria-label="Delete artwork"
-                                                onClick={() => handleDelete(art._id)}
-                                            >
-                                                <Trash2 className="text-red-400 w-4 h-4 hover:text-red-600 transition-colors" />
-                                            </Button>
-                                        </Tooltip>
-                                    </div>
-                                </Table.Cell>
+    <div className="relative flex items-center gap-2">
+        <Tooltip content="View Artwork">
+            <Button 
+                isIconOnly 
+                size="sm" 
+                variant="light" 
+                aria-label="View artwork details"
+                onClick={() => handleView(art._id)}
+            >
+                <Eye className="text-gray-500 w-4 h-4 hover:text-[#718355] transition-colors" />
+            </Button>
+        </Tooltip>
+
+        {/* Edit Button: Disabled if sold */}
+        <Tooltip content={art.status === 'sold' ? "Cannot edit sold artwork" : "Edit Artwork"}>
+            <Button 
+                isIconOnly 
+                size="sm" 
+                variant="light" 
+                aria-label="Edit artwork"
+                isDisabled={art.status === 'sold'}
+                onClick={() => handleEdit(art._id)}
+            >
+                <Edit2 className={`${art.status === 'sold' ? 'text-gray-300' : 'text-gray-500 hover:text-[#718355]'} w-4 h-4 transition-colors`} />
+            </Button>
+        </Tooltip>
+
+        {/* Delete Button: Disabled if sold */}
+        <Tooltip content={art.status === 'sold' ? "Cannot delete sold artwork" : "Delete Artwork"} color={art.status === 'sold' ? "default" : "danger"}>
+            <Button 
+                isIconOnly 
+                size="sm" 
+                variant="light" 
+                aria-label="Delete artwork"
+                isDisabled={art.status === 'sold'}
+                onClick={() => handleDelete(art._id)}
+            >
+                <Trash2 className={`${art.status === 'sold' ? 'text-gray-300' : 'text-red-400 hover:text-red-600'} w-4 h-4 transition-colors`} />
+            </Button>
+        </Tooltip>
+    </div>
+</Table.Cell>
 
                             </Table.Row>
                         ))}

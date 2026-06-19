@@ -4,8 +4,12 @@ import React, { useState } from 'react';
 import { Form, Button, TextField, Label, Input, Description, FieldError } from "@heroui/react";
 // Icons
 import { ArrowRight, Handset, MapPin, PersonFill, Envelope } from '@gravity-ui/icons';
+import toast from 'react-hot-toast';
+import { createPurchase } from '@/lib/actions/purchase';
+import { useRouter } from 'next/navigation';
 
 const BuynowForm = ({ user, artwork }) => {
+    const router = useRouter();
     const [formData, setFormData] = useState({
         phone: '',
         address: ''
@@ -19,10 +23,9 @@ const BuynowForm = ({ user, artwork }) => {
         }));
     };
 
-    const handleSubmit = async (e) => {
+   const handleSubmit = async (e) => {
         e.preventDefault();
         
-        // This is where you will eventually call your Stripe Server Action
         const submissionData = {
             artworkId: artwork?._id,
             artworkTitle: artwork?.title,
@@ -30,11 +33,31 @@ const BuynowForm = ({ user, artwork }) => {
             buyerId: user?.id,
             buyerName: user?.name,
             buyerEmail: user?.email,
+            artistId: artwork?.artistId,
+            artistName: artwork?.artistName,
+            artistEmail: artwork?.artistEmail,
             ...formData
         };
 
-        console.log('Preparing Stripe Checkout for:', submissionData);
-        // await triggerStripeCheckout(submissionData);
+        try {
+            const loadingToast = toast.loading("Recording your purchase...");
+            
+            // This hits your /api/purchases endpoint via your Server Action
+            const res = await createPurchase(submissionData);
+            
+            toast.dismiss(loadingToast);
+
+            if (res.success) {
+                toast.success("Purchase recorded successfully!");
+                // Optionally redirect to a 'success' page or dashboard
+                router.push('/dashboard/buyer/purchases'); 
+            } else {
+                throw new Error("Failed to record purchase");
+            }
+        } catch (error) {
+            console.error("Purchase Error:", error);
+            toast.error("Something went wrong with the purchase.");
+        }
     };
 
     return (
