@@ -18,6 +18,8 @@ export async function POST(request) {
     const price =formData.get('price');
     const title = formData.get('title');
     const productId = formData.get('productId');
+    const imageUrl = formData.get('imageUrl');
+    const artistId = formData.get('artistId');
    
 
    
@@ -47,6 +49,8 @@ export async function POST(request) {
         buyerName: user?.name,
         artworkId: productId,
         artworkTitle: title,
+        imageUrl: imageUrl,
+        artistId: artistId,
       },
 
       mode: 'payment',

@@ -9,26 +9,40 @@ import {
     FileText, 
     CreditCard, 
     Briefcase,
-    Gear
+    Gear,
+    HouseFill,
+    PersonFill
 } from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
-import { Users, LayoutDashboard, PlusCircle, History } from "lucide-react";
+import { Users, LayoutDashboard, PlusCircle, History, CreditCardIcon } from "lucide-react";
+import { FiFileText } from 'react-icons/fi';
 
-export const DashboardSidebar = () => {
-   
-    const session = {
-        user: {
-            name: "Nafis Sahriar Redwan",
-            role: "artist", 
-        }
-    };
-
+// Accept session as a prop here!
+export const DashboardSidebar = ({ session }) => {
     const pathname = usePathname();
 
     const buyerNavLinks = [
-        { icon: House, href: "/dashboard/user", label: "My Purchases" },
-        { icon: Person, href: "/dashboard/user/profile", label: "Profile Settings" },
-    ];
+    { 
+        icon: HouseFill, 
+        href: "/dashboard/buyer", 
+        label: "My Collection" // Maps to "Bought Artworks" gallery
+    },
+    { 
+        icon: FiFileText, 
+        href: "/dashboard/buyer/purchases", 
+        label: "Purchase History" // Maps to the tabular receipt view
+    },
+    { 
+        icon: CreditCardIcon, 
+        href: "/dashboard/buyer/billing", 
+        label: "Subscription & Billing" // Maps to "Subscription Tier Overview"
+    },
+    { 
+        icon: PersonFill, 
+        href: "/dashboard/buyer/profile", 
+        label: "Profile Settings" // Maps to "Profile Management"
+    },
+];
 
     const artistNavLinks = [
         { icon: LayoutDashboard, href: "/dashboard/artist", label: "Artist Home" },
@@ -51,8 +65,8 @@ export const DashboardSidebar = () => {
         admin: adminNavLinks
     };
 
-    const navItems = navLinksMap[session?.user?.role || 'buyer'];
-
+    // Safely fallback to 'buyer' if session or role is somehow missing
+    const navItems = navLinksMap[session?.user?.role || session?.role || 'buyer'];
 
     const navContent = (
         <div className="flex h-full flex-col justify-between">
@@ -89,15 +103,19 @@ export const DashboardSidebar = () => {
         </div>
     );
 
+    // Safely grab the role and name
+    const role = session?.user?.role || session?.role || 'buyer';
+    const userName = session?.user?.name || session?.name || 'User';
+
     return (
         <>
             {/* Desktop View: Sticky Sidebar */}
             <aside className="hidden w-64 shrink-0 flex-col rounded-3xl border border-[#CFE1B9]/50 bg-white/60 p-5 backdrop-blur-xl lg:flex sticky top-24 h-[calc(100vh-8rem)]">
                 <div className="mb-4 px-2 border-b border-[#CFE1B9]/50 pb-4">
-                    <h2 className="text-xl font-bold tracking-tight text-[#718355]">
-                        {session.user.role === 'buyer' ? 'Collector' : session.user.role.charAt(0).toUpperCase() + session.user.role.slice(1)} Dashboard
+                    <h2 className="text-xl font-bold tracking-tight text-[#718355] capitalize">
+                        {role === 'buyer' ? 'Collector' : role} Dashboard
                     </h2>
-                    <p className="text-xs text-[#97A97C] font-medium mt-1">Welcome, {session.user.name.split(' ')[0]}</p>
+                    <p className="text-xs text-[#97A97C] font-medium mt-1">Welcome, {userName.split(' ')[0]}</p>
                 </div>
                 {navContent}
             </aside>
@@ -119,7 +137,7 @@ export const DashboardSidebar = () => {
                                 <Drawer.CloseTrigger className="text-[#718355] bg-[#E9F5DB] hover:bg-[#CFE1B9]" />
                                 <Drawer.Header className="border-b border-[#CFE1B9]/50 pb-4 mt-4">
                                     <h2 className="text-2xl font-bold tracking-tight text-[#718355] capitalize">
-                                        {session.user.role} Dashboard
+                                        {role} Dashboard
                                     </h2>
                                 </Drawer.Header>
                                 <Drawer.Body className="px-4">

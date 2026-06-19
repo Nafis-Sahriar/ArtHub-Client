@@ -46,10 +46,12 @@ const Navbar = () => {
 
 
   const dashboardLinks = {
-    buyer: '/dashboard/user',
+    buyer: '/dashboard/buyer',
     artist: '/dashboard/artist',
     admin: '/dashboard/admin'
   };
+
+ 
 
   return (
     <nav className="sticky top-0 z-50 w-full py-4 transition-all duration-300">
