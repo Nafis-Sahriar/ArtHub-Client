@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import React from 'react';
 import BuynowForm from './BuynowForm';
 import { getPurchasesByBuyer } from '@/lib/api/purchase';
+import Link from 'next/link';
 
 const BuyPage = async ({ params }) => 
 {
@@ -74,9 +75,13 @@ const BuyPage = async ({ params }) =>
                     <p className="text-red-700 mb-6">
                         You&apos;ve reached your monthly limit of {plan.maxPurchasesPerMonth} artworks.
                     </p>
+                    <Link href="/plans" className="text-red-600 font-bold hover:underline">
+                    
                     <button className="bg-red-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-red-700 transition">
                         View Premium Plans
                     </button>
+                    
+                    </Link>
                 </div>
             )}
         </div>
