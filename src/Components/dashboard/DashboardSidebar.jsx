@@ -1,15 +1,13 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { 
     LayoutSideContentLeft, 
     House, 
     Person, 
-    FileText, 
     CreditCard, 
     Briefcase,
-    Gear,
     HouseFill,
     PersonFill
 } from "@gravity-ui/icons";
@@ -17,32 +15,18 @@ import { Button, Drawer } from "@heroui/react";
 import { Users, LayoutDashboard, PlusCircle, History, CreditCardIcon } from "lucide-react";
 import { FiFileText } from 'react-icons/fi';
 
-// Accept session as a prop here!
 export const DashboardSidebar = ({ session }) => {
     const pathname = usePathname();
+    
+    // 1. Add state to control the drawer's open/close status
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
     const buyerNavLinks = [
-    { 
-        icon: HouseFill, 
-        href: "/dashboard/buyer", 
-        label: "My Collection" // Maps to "Bought Artworks" gallery
-    },
-    { 
-        icon: FiFileText, 
-        href: "/dashboard/buyer/purchases", 
-        label: "Purchase History" // Maps to the tabular receipt view
-    },
-    { 
-        icon: CreditCardIcon, 
-        href: "/dashboard/buyer/billing", 
-        label: "Subscription & Billing" // Maps to "Subscription Tier Overview"
-    },
-    { 
-        icon: PersonFill, 
-        href: "/dashboard/buyer/profile", 
-        label: "Profile Settings" // Maps to "Profile Management"
-    },
-];
+        { icon: HouseFill, href: "/dashboard/buyer", label: "My Collection" },
+        { icon: FiFileText, href: "/dashboard/buyer/purchases", label: "Purchase History" },
+        { icon: CreditCardIcon, href: "/dashboard/buyer/billing", label: "Subscription & Billing" },
+        { icon: PersonFill, href: "/dashboard/buyer/profile", label: "Profile Settings" },
+    ];
 
     const artistNavLinks = [
         { icon: LayoutDashboard, href: "/dashboard/artist", label: "Artist Home" },
@@ -65,10 +49,10 @@ export const DashboardSidebar = ({ session }) => {
         admin: adminNavLinks
     };
 
-    // Safely fallback to 'buyer' if session or role is somehow missing
     const navItems = navLinksMap[session?.user?.role || session?.role || 'buyer'];
 
-    const navContent = (
+    // 2. Convert navContent to a function that accepts an onClose handler
+    const renderNavContent = (onClose) => (
         <div className="flex h-full flex-col justify-between">
             <nav className="flex flex-col gap-2 mt-4">
                 {navItems.map((item) => {
@@ -77,6 +61,7 @@ export const DashboardSidebar = ({ session }) => {
                         <Link
                             key={item.label}
                             href={item.href}
+                            onClick={onClose} // Instantly closes the drawer on click
                             className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition-all duration-200 
                                 ${isActive 
                                     ? "bg-[#718355] text-white shadow-md shadow-[#718355]/20" 
@@ -94,6 +79,7 @@ export const DashboardSidebar = ({ session }) => {
             <div className="mb-6 border-t border-[#CFE1B9]/50 pt-4 mt-8">
                 <Link
                     href="/"
+                    onClick={onClose} // Instantly closes the drawer on click
                     className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-[#718355] transition-colors hover:bg-red-50 hover:text-red-600"
                 >
                     <House className="size-5" />
@@ -103,7 +89,6 @@ export const DashboardSidebar = ({ session }) => {
         </div>
     );
 
-    // Safely grab the role and name
     const role = session?.user?.role || session?.role || 'buyer';
     const userName = session?.user?.name || session?.name || 'User';
 
@@ -117,13 +102,20 @@ export const DashboardSidebar = ({ session }) => {
                     </h2>
                     <p className="text-xs text-[#97A97C] font-medium mt-1">Welcome, {userName.split(' ')[0]}</p>
                 </div>
-                {navContent}
+                {/* Desktop doesn't need to close anything on click */}
+                {renderNavContent()}
             </aside>
 
             {/* Mobile View: Full-width inline toggle button */}
             <div className="lg:hidden w-full block">
-                <Drawer>
+                <Drawer 
+                    isOpen={isDrawerOpen} 
+                    open={isDrawerOpen} 
+                    onOpenChange={setIsDrawerOpen}
+                >
                     <Button 
+                        onClick={() => setIsDrawerOpen(true)}
+                        onPress={() => setIsDrawerOpen(true)}
                         className="w-full flex justify-between items-center bg-[#E9F5DB] border border-[#CFE1B9] text-[#718355] font-semibold rounded-2xl py-6 shadow-sm"
                     >
                         <span className="flex items-center gap-2">
@@ -134,14 +126,15 @@ export const DashboardSidebar = ({ session }) => {
                     <Drawer.Backdrop>
                         <Drawer.Content placement="left" className="bg-[#F4F7F0]">
                             <Drawer.Dialog>
-                                <Drawer.CloseTrigger className="text-[#718355] bg-[#E9F5DB] hover:bg-[#CFE1B9]" />
+                                <Drawer.CloseTrigger onClick={() => setIsDrawerOpen(false)} className="text-[#718355] bg-[#E9F5DB] hover:bg-[#CFE1B9]" />
                                 <Drawer.Header className="border-b border-[#CFE1B9]/50 pb-4 mt-4">
                                     <h2 className="text-2xl font-bold tracking-tight text-[#718355] capitalize">
                                         {role} Dashboard
                                     </h2>
                                 </Drawer.Header>
                                 <Drawer.Body className="px-4">
-                                    {navContent}
+                                    {/* Pass the state-closing function to Mobile nav items */}
+                                    {renderNavContent(() => setIsDrawerOpen(false))}
                                 </Drawer.Body>
                             </Drawer.Dialog>
                         </Drawer.Content>
