@@ -1,0 +1,95 @@
+'use client';
+import React, { useState } from 'react';
+import { Check, Star, Briefcase, Person } from '@gravity-ui/icons';
+
+const PricingPage = () => {
+  
+    const plans = [
+        {
+            name: 'Free',
+            price: '$0',
+            period: '/forever',
+            description: 'The foundation for your artistic journey.',
+            icon: <Person className="w-6 h-6 text-[#718355]" />,
+            features: ['3 paintings allowance', 'Public gallery access', 'Standard support'],
+            cta: 'Get Started',
+            popular: false
+        },
+        {
+            name: 'Premium', 
+            price: '$19.99',
+            period: '/month',
+            description: 'Uncapped potential for elite creators.',
+            icon: <Star className="w-6 h-6 text-[#718355]" />,
+            features: ['Unlimited paintings', 'Priority support', 'Advanced analytics', 'Custom branding'],
+            cta: 'Go Premium',
+            popular: true 
+        },
+        {
+            name: 'Pro',
+            price: '$9.99',
+            period: '/month',
+            description: 'Expanded allocation for growing portfolios.',
+            icon: <Briefcase className="w-6 h-6 text-[#718355]" />,
+            features: ['9 paintings allowance', 'Full tracking', 'Performance metrics', 'Email support'],
+            cta: 'Upgrade to Pro',
+            popular: false
+        }
+    ];
+
+    return (
+        <div className="w-full min-h-screen bg-white py-16 px-4">
+            <div className="max-w-6xl mx-auto">
+               
+                <div className="text-center mb-16">
+                    <h1 className="text-4xl font-extrabold text-[#718355] tracking-tight">Subscription Tier Overview</h1>
+                    <p className="text-[#97A97C] mt-4">Select the plan that best fits your artistic growth.</p>
+                </div>
+
+             
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center mb-24">
+                    {plans.map((plan, idx) => (
+                        <div
+                            key={idx}
+                            className={`relative border rounded-3xl p-8 flex flex-col min-h-[500px] transition-all duration-300 ${
+                                plan.popular
+                                    ? 'border-[#718355] bg-[#F9FBF6] shadow-2xl scale-105 z-10'
+                                    : 'border-[#CFE1B9] bg-white hover:shadow-lg'
+                            }`}
+                        >
+                            {plan.popular && (
+                                <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 text-[10px] font-bold text-white bg-[#718355] rounded-full uppercase tracking-wider shadow-md">
+                                    Recommended
+                                </span>
+                            )}
+
+                            <div className="flex-grow">
+                                <div className="mb-4 bg-[#E9F5DB] w-fit p-3 rounded-xl">{plan.icon}</div>
+                                <h3 className="text-2xl font-bold text-gray-800">{plan.name}</h3>
+                                <div className="text-5xl font-black my-6 text-[#718355]">{plan.price}</div>
+                                <p className="text-sm text-gray-500 mb-6">{plan.description}</p>
+                                <ul className="space-y-4 mb-8">
+                                    {plan.features.map((f, fIdx) => (
+                                        <li key={fIdx} className="flex items-center gap-3 text-sm text-gray-700">
+                                            <Check className="w-4 h-4 text-[#718355]" /> {f}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            <button className={`w-full py-4 rounded-xl font-bold transition ${
+                                plan.popular 
+                                    ? 'bg-[#718355] text-white hover:bg-[#87986A]' 
+                                    : 'bg-gray-800 text-white hover:bg-gray-700'
+                            }`}>
+                                {plan.cta}
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default PricingPage;
