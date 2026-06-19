@@ -5,6 +5,7 @@ import React from 'react';
 import BuynowForm from './BuynowForm';
 import { getPurchasesByBuyer } from '@/lib/api/purchase';
 import Link from 'next/link';
+import { getPlanById } from '@/lib/api/plans';
 
 const BuyPage = async ({ params }) => 
 {
@@ -33,13 +34,13 @@ const BuyPage = async ({ params }) =>
 
     const purchases = await getPurchasesByBuyer(user.id);
 
-    const plan = { 
-        name: "free", 
-        maxPurchasesPerMonth: 3 
-    };
+    const plan= await getPlanById(user?.plan || 'buyer_free');
+    // console.log('User Plan Details:', plan1); 
 
+  
     const purchaseCount = purchases.length;
     const isAtLimit = purchaseCount >= plan.maxPurchasesPerMonth;
+
 
     if (user.id === artwork.artistId) 
     {

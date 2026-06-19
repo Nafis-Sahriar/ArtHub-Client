@@ -7,6 +7,7 @@ const PricingPage = () => {
     const plans = [
         {
             name: 'Free',
+            id:'buyer_free',
             price: '$0',
             period: '/forever',
             description: 'The foundation for your artistic journey.',
@@ -17,6 +18,7 @@ const PricingPage = () => {
         },
         {
             name: 'Premium', 
+            id:'buyer_premium',
             price: '$19.99',
             period: '/month',
             description: 'Uncapped potential for elite creators.',
@@ -27,6 +29,7 @@ const PricingPage = () => {
         },
         {
             name: 'Pro',
+            id:'buyer_pro',
             price: '$9.99',
             period: '/month',
             description: 'Expanded allocation for growing portfolios.',
@@ -77,13 +80,24 @@ const PricingPage = () => {
                                 </ul>
                             </div>
 
-                            <button className={`w-full py-4 rounded-xl font-bold transition ${
-                                plan.popular 
-                                    ? 'bg-[#718355] text-white hover:bg-[#87986A]' 
-                                    : 'bg-gray-800 text-white hover:bg-gray-700'
-                            }`}>
-                                {plan.cta}
-                            </button>
+
+                                    <form action="/api/checkout_sessions" method="POST">
+                                        <input type="hidden" name="plan_Id" value={plan.id} />
+                                        <section>
+                                            <button type="submit" role="link" 
+                                            className={`w-full py-4 rounded-xl font-bold transition ${
+                                         plan.popular 
+                                                ? 'bg-[#718355] text-white hover:bg-[#87986A]' 
+                                                : 'bg-gray-800 text-white hover:bg-gray-700'
+                                        }`}>
+                                            Checkout
+                                            </button>
+                                        </section>
+                                    </form>
+
+
+
+                         
                         </div>
                     ))}
                 </div>
