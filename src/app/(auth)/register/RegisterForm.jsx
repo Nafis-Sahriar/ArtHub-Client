@@ -18,7 +18,7 @@ const RegisterForm = ({ redirectTo = "/" }) => {
         const formData = new FormData(e.target);
         const userData = Object.fromEntries(formData.entries());
 
-        const plan = userData.role === 'buyer' ? 'buyer_free' : 'artist_free';
+        const plan = userData.role === 'buyer' ? 'buyer_free' : 'buyer_free';
         userData.plan = plan;
 
         console.log("Form Data Submitted:", userData);

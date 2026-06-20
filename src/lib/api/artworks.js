@@ -31,15 +31,22 @@ export const getArtworkById = async (id) => {
 }
 
 
-export const getAllAvailableArtworks = async () => {
+export const getAllAvailableArtworks = async (queryString = "") => {
     try {
-        const res = await fetch(`${baseURL}/api/artworks?status=available`, {
+        const url = queryString 
+            ? `${baseURL}/api/artworks?${queryString}` 
+            : `${baseURL}/api/artworks`;
+            
+        const res = await fetch(url, {
             cache: 'no-store' 
         });
+        
         if (!res.ok) throw new Error("Failed to fetch public artworks");
+        
+        // This will return the array from your backend
         return await res.json();
     } catch (error) {
         console.error("Error fetching available artworks:", error);
-        return [];
+        return []; // Fallback to an empty array so the app doesn't crash
     }
 }

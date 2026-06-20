@@ -1,15 +1,35 @@
 import React from 'react';
 import { getAllAvailableArtworks } from '@/lib/api/artworks';
-import ArtContainer from '@/components/artworks/ArtContainer'; // We will build this next
+import ArtContainer from '@/components/artworks/ArtContainer'; 
 
 export const metadata = {
     title: 'Explore Artworks | ArtHub',
-    description: 'Browse and purchase original masterpieces from talented artists worldwide.',
 };
 
-const BrowseArtworksPage = async () => {
-    // ekhane ami sobgulo artwork fetch korlam.
-    const artworks = await getAllAvailableArtworks();
+export const dynamic = 'force-dynamic'; 
+
+export default async function BrowseArtworksPage({ searchParams }) {
+    
+    
+    const rawFilters = await searchParams;
+    
+ 
+    const plainFilters = {
+        search: rawFilters?.search || "",
+        category: rawFilters?.category || "all",
+        sort: rawFilters?.sort || "newest"
+    };
+    
+    
+    const querySearch = new URLSearchParams({ 
+        ...plainFilters, 
+        status: 'available' 
+    });
+    const queryString = querySearch.toString();
+
+   
+    const artworks = await getAllAvailableArtworks(queryString);
+    const validArtworks = Array.isArray(artworks) ? artworks : [];
 
     return (
         <div className="min-h-screen bg-[#F4F7F0] pt-10 pb-24">
@@ -24,11 +44,8 @@ const BrowseArtworksPage = async () => {
                     </p>
                 </div>
 
-             
-                <ArtContainer initialArtworks={artworks} />
+                <ArtContainer filters={plainFilters} artworks={validArtworks} />
             </div>
         </div>
     );
-};
-
-export default BrowseArtworksPage;
+}
