@@ -1,11 +1,32 @@
 import React from 'react';
+import { redirect } from 'next/navigation';
+import { getUserSession } from '@/lib/core/session';
+import { serverFetch } from '@/lib/core/server';
+import UsersTable from './UsersTable';
 
-const UserManagementPage = () => {
+const ManageUsersPage = async () => {
+    // 1. Authenticate & Authorize
+    const session = await getUserSession();
+    if (!session || session.role !== 'admin') {
+        redirect('/dashboard/unauthorized');
+    }
+
+    // 2. Fetch all users from the server
+    const users = await serverFetch('/api/users');
+
     return (
-        <div>
-            This is User Management Page
+        <div className="p-2 sm:p-6 max-w-7xl mx-auto space-y-6">
+            <div>
+                <h1 className="text-3xl font-extrabold text-zinc-900 mb-2">Manage Users</h1>
+                <p className="text-lg text-zinc-500">
+                    View all registered users and manage their platform roles.
+                </p>
+            </div>
+
+            {/* 3. Pass data to the interactive Client Component */}
+            <UsersTable initialUsers={users} currentUser={session} />
         </div>
     );
 };
 
-export default UserManagementPage;
+export default ManageUsersPage;
