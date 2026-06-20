@@ -5,13 +5,13 @@ import { serverFetch } from '@/lib/core/server';
 import UsersTable from './UsersTable';
 
 const ManageUsersPage = async () => {
-    // 1. Authenticate & Authorize
+    
     const session = await getUserSession();
     if (!session || session.role !== 'admin') {
         redirect('/dashboard/unauthorized');
     }
 
-    // 2. Fetch all users from the server
+    
     const users = await serverFetch('/api/users');
 
     return (
@@ -23,7 +23,6 @@ const ManageUsersPage = async () => {
                 </p>
             </div>
 
-            {/* 3. Pass data to the interactive Client Component */}
             <UsersTable initialUsers={users} currentUser={session} />
         </div>
     );

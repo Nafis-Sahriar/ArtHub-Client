@@ -13,6 +13,7 @@ const BuynowForm = ({ artwork }) => {
                 <input type='hidden' name="productId" value={artwork?._id} />
                 <input type='hidden' name="imageUrl" value={artwork?.imageUrl} />
                 <input type='hidden' name="artistId" value={artwork?.artistId} />
+                <input type='hidden' name="category" value={artwork?.category} />
 
 
                 <Button 

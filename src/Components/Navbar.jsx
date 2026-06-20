@@ -5,9 +5,12 @@ import { Bars, Xmark, ArrowRightFromSquare, Gear } from '@gravity-ui/icons';
 import { Button, Avatar, Dropdown, Label } from '@heroui/react';
 import { authClient } from '@/lib/auth-client';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const router = useRouter();
   
 
   const { data: session, isPending, refetch } = authClient.useSession();
@@ -31,6 +34,7 @@ const Navbar = () => {
       await authClient.signOut();
       toast.success("Logged out successfully!");
       refetch(); 
+      router.push('/');
     } catch (error) {
       console.error("Sign Out Error:", error);
       toast.error("Failed to log out.");

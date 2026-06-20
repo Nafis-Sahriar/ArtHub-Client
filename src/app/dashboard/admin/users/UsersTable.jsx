@@ -29,7 +29,7 @@ const UsersTable = ({ initialUsers = [], currentUser }) => {
                         </span>
                     </Chip>
                 );
-            default: // buyer / user
+            default: 
                 return (
                     <Chip className="bg-gray-100 text-gray-600 border border-gray-200 font-semibold px-2">
                         <span className="flex items-center gap-1.5">

@@ -20,6 +20,7 @@ export async function POST(request) {
     const productId = formData.get('productId');
     const imageUrl = formData.get('imageUrl');
     const artistId = formData.get('artistId');
+    const category = formData.get('category');
    
 
    
@@ -51,6 +52,7 @@ export async function POST(request) {
         artworkTitle: title,
         imageUrl: imageUrl,
         artistId: artistId,
+        category: category,
       },
 
       mode: 'payment',
