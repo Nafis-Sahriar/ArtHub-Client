@@ -38,8 +38,20 @@ const SignInPage = ({ redirectTo = "/" }) => {
         }
     };
 
-    const handleGoogleSignIn = () => {
-        console.log("Google Sign In Clicked");
+       const handleGoogleSignIn = async () => {
+
+        const data = await authClient.signIn.social({
+            provider: "google",
+           
+        })
+
+       if(data){
+            redirect(redirectTo);
+       }
+       else{
+            toast.error("Error signing UP with Google, something went wrong.");
+       }
+
     };
 
     // Animation presets for modular application

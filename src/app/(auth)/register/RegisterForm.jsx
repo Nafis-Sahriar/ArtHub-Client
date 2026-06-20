@@ -40,8 +40,20 @@ const RegisterForm = ({ redirectTo = "/" }) => {
         }
     };
 
-    const handleGoogleSignUp = () => {
-        console.log("Google Sign Up Clicked");
+    const handleGoogleSignUp = async () => {
+
+        const data = await authClient.signIn.social({
+            provider: "google",
+           
+        })
+
+       if(data){
+            redirect(redirectTo);
+       }
+       else{
+            toast.error("Error signing UP with Google, something went wrong.");
+       }
+
     };
 
     // Unified animation presets

@@ -108,7 +108,7 @@ const Navbar = () => {
                  
                     <Avatar className="ring-2 ring-[#97A97C] ring-offset-2 ring-offset-[#E9F5DB]">
                       {user.imageUrl && (
-                        <Avatar.Image alt={user.name || "User"} src={user.imageUrl} />
+                        <Avatar.Image referrerPolicy='no-referrer' alt={user.name || "User"} src={user.imageUrl} />
                       )}
                       <Avatar.Fallback className="bg-[#CFE1B9] text-[#718355] font-medium" delayMs={600}>
                         {getInitials(user.name)}
