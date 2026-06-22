@@ -18,6 +18,8 @@ const BuyerPurchasesPage = async () => {
     
     const purchases = await serverFetch(`/api/purchases?buyerId=${user.id}`);
 
+    // ekhan theke protected fetch marte hobe.
+
     return (
         <div className="max-w-7xl mx-auto space-y-8">
             
