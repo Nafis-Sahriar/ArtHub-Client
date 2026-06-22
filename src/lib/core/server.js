@@ -42,7 +42,8 @@ export const serverMutation = async (path, data, method = 'POST') => {
     const res = await fetch(`${baseURL}${path}`, {
         method: method,
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token.token}`
         },
         
         body: data ? JSON.stringify(data) : undefined
