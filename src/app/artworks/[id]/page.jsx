@@ -4,6 +4,7 @@ import { Chip, Button } from '@heroui/react';
 import { ArrowLeft, Edit2, ShoppingCart, ShieldAlert } from 'lucide-react';
 import { getArtworkById } from '@/lib/api/artworks';
 import { getUserSession } from '@/lib/core/session'; // Adjust path if needed
+import CommentSection from '@/Components/artworks/CommentSection';
 
 const PublicArtworkDetails = async ({ params }) => {
    
@@ -142,6 +143,7 @@ const PublicArtworkDetails = async ({ params }) => {
 
                     </div>
                 </div>
+                <CommentSection artworkId={artwork._id} session={session} />
             </div>
         </div>
     );

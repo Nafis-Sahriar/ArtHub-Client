@@ -1,7 +1,17 @@
+import { headers } from "next/headers";
+import { auth } from "../auth";
+import { authClient } from "../auth-client";
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000";
 
 export const getArtistArtworks = async (artistId) => {
+
+     const token = await auth.api.getToken({
+        headers: await headers()
+     })
+
+     console.log("Token for fetching artist artworks:", token.token);
+
     try {
         const res = await fetch(`${baseURL}/api/artworks?artistId=${artistId}`);
         if (!res.ok) throw new Error("Failed to fetch artworks");
@@ -13,8 +23,9 @@ export const getArtistArtworks = async (artistId) => {
 }
 
 export const getArtworkById = async (id) => {
+
     try {
-        
+
         const res = await fetch(`${baseURL}/api/artworks/${id}`, {
             cache: 'no-store'
         });

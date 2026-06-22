@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Check, Star, Briefcase, Person } from '@gravity-ui/icons';
 
 const PricingPage = () => {
+
   
     const plans = [
         {
