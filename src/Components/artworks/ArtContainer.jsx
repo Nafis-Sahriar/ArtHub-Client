@@ -3,32 +3,57 @@ import React, { useState, useEffect } from "react";
 import ArtworkCard from "./ArtworkCard";
 import ArtworkFilters from "./ArtworkFilters";
 import { useRouter } from "next/navigation";
+import { Pagination } from "@heroui/react";
 
-export default function ArtContainer({ artworks = [], filters = {} }) {
+export default function ArtContainer({ artworks = [], filters = {}, total = 0 }) {
   const [searchQuery, setSearchQuery] = useState(filters.search || "");
   const [selectedCategory, setSelectedCategory] = useState(filters.category || "all");
   const [selectedSort, setSelectedSort] = useState(filters.sort || "newest");
+  const [page, setPage] = useState(filters.page || 1);
 
   const router = useRouter();
 
-  // URL Sync
+
+  const itemsPerPage =4 ;
+  const totalItems = total;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const getPageNumbers =()=>{
+    const pages = [...Array(totalPages).keys()].map(i=>i+1);
+    return pages;
+  }
+
+  const startItem = (page - 1) * itemsPerPage + 1;
+  const endItem = Math.min(page * itemsPerPage, totalItems);
+  
+  
+
+
   useEffect(() => {
     const sp = new URLSearchParams();
 
     if (searchQuery) sp.set('search', searchQuery);
     if (selectedCategory && selectedCategory !== 'all') sp.set('category', selectedCategory);
     if (selectedSort && selectedSort !== 'newest') sp.set('sort', selectedSort);
+    if(page)
+    {
+      sp.set('page', page);
+    }
+    if(itemsPerPage)
+    {
+      sp.set('perPage', itemsPerPage);
+    }
 
     const path = `?${sp.toString()}`;
     
-    // Add a small delay so it doesn't slam the server on every keystroke
+   
     const timeoutId = setTimeout(() => {
         router.push(path, { scroll: false });
     }, 400);
 
     return () => clearTimeout(timeoutId);
 
-  }, [router, searchQuery, selectedCategory, selectedSort]);
+  }, [router, searchQuery, selectedCategory, selectedSort, page, itemsPerPage]);
 
   return (
     <>
@@ -46,6 +71,7 @@ export default function ArtContainer({ artworks = [], filters = {} }) {
       </div>
 
       {artworks.length > 0 ? (
+      <>
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-10">
           {artworks.map((art) => (
             <ArtworkCard
@@ -54,6 +80,45 @@ export default function ArtContainer({ artworks = [], filters = {} }) {
             />
           ))}
         </div>
+
+        <Pagination className="w-full">
+      <Pagination.Summary>
+        Showing {startItem}-{endItem} of {totalItems} results
+      </Pagination.Summary>
+      <Pagination.Content>
+        <Pagination.Item>
+          <Pagination.Previous isDisabled={page === 1} onPress={() => setPage((p) => p - 1)}>
+            <Pagination.PreviousIcon />
+            <span>Previous</span>
+          </Pagination.Previous>
+        </Pagination.Item>
+        {getPageNumbers().map((p, i) =>
+          p === "ellipsis" ? (
+            <Pagination.Item key={`ellipsis-${i}`}>
+              <Pagination.Ellipsis />
+            </Pagination.Item>
+          ) : (
+            <Pagination.Item key={p}>
+              <Pagination.Link isActive={p === page} onPress={() => setPage(p)}>
+                {p}
+              </Pagination.Link>
+            </Pagination.Item>
+          ),
+        )}
+        <Pagination.Item>
+          <Pagination.Next isDisabled={page === totalPages} onPress={() => setPage((p) => p + 1)}>
+            <span>Next</span>
+            <Pagination.NextIcon />
+          </Pagination.Next>
+        </Pagination.Item>
+      </Pagination.Content>
+    </Pagination>
+
+        
+
+
+
+      </>
       ) : (
         <div className="text-center py-20 bg-white border border-[#CFE1B9]/50 rounded-3xl shadow-sm max-w-7xl mx-auto">
           <p className="text-zinc-500 text-lg">No artworks match your search criteria.</p>

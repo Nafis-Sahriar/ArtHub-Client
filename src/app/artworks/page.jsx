@@ -10,16 +10,15 @@ export const dynamic = 'force-dynamic';
 
 export default async function BrowseArtworksPage({ searchParams }) {
     
-    
     const rawFilters = await searchParams;
     
- 
     const plainFilters = {
         search: rawFilters?.search || "",
         category: rawFilters?.category || "all",
-        sort: rawFilters?.sort || "newest"
+        sort: rawFilters?.sort || "newest",
+        page: rawFilters?.page || 1,
+        perPage: rawFilters?.perPage || 3 
     };
-    
     
     const querySearch = new URLSearchParams({ 
         ...plainFilters, 
@@ -27,9 +26,12 @@ export default async function BrowseArtworksPage({ searchParams }) {
     });
     const queryString = querySearch.toString();
 
-   
-    const artworks = await getAllAvailableArtworks(queryString);
-    const validArtworks = Array.isArray(artworks) ? artworks : [];
+    const response = await getAllAvailableArtworks(queryString);
+    
+    const validArtworks = response?.results || (Array.isArray(response) ? response : []);
+    
+    // <-- CHANGED: Added "|| 0" as a final safety net for the pagination math
+    const totalCount = response?.total || validArtworks.length || 0;
 
     return (
         <div className="min-h-screen bg-[#F4F7F0] pt-10 pb-24">
@@ -44,7 +46,7 @@ export default async function BrowseArtworksPage({ searchParams }) {
                     </p>
                 </div>
 
-                <ArtContainer filters={plainFilters} artworks={validArtworks} />
+                <ArtContainer filters={plainFilters} artworks={validArtworks} total={totalCount} />
             </div>
         </div>
     );
