@@ -70,18 +70,15 @@ export default function FeaturedSection() {
                     </div>
                 </div>
 
-                {/* ==========================================
-                    LAYOUT 1: MOBILE & TABLET (STATIC GRID)
-                    Visible by default, hidden on lg screens
-                ========================================== */}
+               
                 <div className="block lg:hidden">
                     <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-6">
                         {isLoading ? (
                             Array(3).fill(0).map((_, i) => (
-                                <div key={i} className="w-full h-[400px] bg-white/40 border border-[#CFE1B9]/50 rounded-3xl animate-pulse" />
+                                <div key={i} className="w-full h-100 bg-white/40 border border-[#CFE1B9]/50 rounded-3xl animate-pulse" />
                             ))
                         ) : (
-                            artworks.slice(0, 6).map((art) => ( // Sliced to 6 so it doesn't make the mobile page infinitely long
+                            artworks.slice(0, 6).map((art) => ( 
                                 <div key={art._id} className="w-full">
                                     <ArtworkCard artwork={art} />
                                 </div>
@@ -91,10 +88,7 @@ export default function FeaturedSection() {
                 </div>
 
 
-                {/* ==========================================
-                    LAYOUT 2: LAPTOP & DESKTOP (SLIDER)
-                    Hidden by default, visible on lg screens
-                ========================================== */}
+               
                 <div className="hidden lg:block relative w-full">
                     <div 
                         ref={sliderRef}
@@ -104,14 +98,14 @@ export default function FeaturedSection() {
                             Array(5).fill(0).map((_, i) => (
                                 <div 
                                     key={i} 
-                                    className="w-[300px] shrink-0 h-[400px] bg-white/40 border border-[#CFE1B9]/50 rounded-3xl animate-pulse snap-start"
+                                    className="w-75 shrink-0 h-100 bg-white/40 border border-[#CFE1B9]/50 rounded-3xl animate-pulse snap-start"
                                 />
                             ))
                         ) : (
                             artworks.map((art) => (
                                 <div 
                                     key={art._id} 
-                                    className="w-[300px] shrink-0 snap-start"
+                                    className="w-75 shrink-0 snap-start"
                                 >
                                     <ArtworkCard artwork={art} />
                                 </div>
