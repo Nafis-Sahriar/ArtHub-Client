@@ -10,7 +10,7 @@ export default function ContactPage() {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        role: 'collector',
+        role: '',
         subject: '',
         message: ''
     });

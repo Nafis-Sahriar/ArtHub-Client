@@ -36,6 +36,7 @@ export const DashboardSidebar = ({ session }) => {
         { icon: PlusCircle, href: "/dashboard/artist/arts/new", label: "Add Artwork" },
         { icon: History, href: "/dashboard/artist/sales", label: "Sales History" },
         { icon: Person, href: "/dashboard/artist/profile", label: "Profile Settings" },
+        { icon: CreditCardIcon, href: "/dashboard/artist/purchases", label: "My Purchases" },
     ];
 
     const adminNavLinks = [

@@ -105,12 +105,12 @@ const PublicArtworkDetails = async ({ params }) => {
                             </p>
                         </div>
 
-                        {/* PERSONA RENDER BLOCK */}
+                       
                         <div className="pt-6 border-t border-[#CFE1B9]/30">
                             {isOwningArtist ? (
-                                // Render for Owning Artist
+                                
                                 <div className="flex flex-col gap-3">
-                                    <div className="bg-blue-50 border border-blue-100 text-blue-700 px-4 py-3 rounded-xl text-sm font-medium mb-2 text-center">
+                                    <div className="bg-red-50 border border-red-100 text-red-700 font-bold px-4 py-3 rounded-xl text-sm  mb-2 text-center">
                                         This is your artwork. You cannot purchase it.
                                     </div>
                                     <Link href={`/dashboard/artist/arts/${artwork._id}/edit`} className="w-full">
