@@ -13,7 +13,7 @@ const getAuthToken = async () => {
 }
 
 export const getCommentsByArtworkId = async (artworkId) => {
-    const token = await getAuthToken();
+    // const token = await getAuthToken();
     try {
         const res = await fetch(`${baseURL}/api/comments/${artworkId}`, {
             cache: 'no-store'

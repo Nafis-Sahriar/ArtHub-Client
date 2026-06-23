@@ -40,7 +40,7 @@ const Banner = () => {
   const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
 
   return (
-    <div className="relative w-full md:w-[90%] md:rounded-3xl h-125 md:h-150 overflow-hidden bg-black">
+    <div className="relative w-full md:w-[90%] md:rounded-3xl h-125 md:h-180 overflow-hidden bg-black">
 
 
       <div
@@ -73,7 +73,7 @@ const Banner = () => {
             
               <div className="h-px w-16 bg-linear-to-r from-transparent via-[#CFE1B9]/70 to-transparent"></div>
 
-              <h1 className="font-serif font-semibold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] tracking-tight text-white drop-shadow-md">
+              <h1 className="font-serif font-semibold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] tracking-tight text-white drop-shadow-md italic">
                 {slide.title}
               </h1>
 
