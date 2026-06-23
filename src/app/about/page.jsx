@@ -41,11 +41,11 @@ export default function AboutPage() {
             {/* --- Ambient Background Glows --- */}
             <motion.div 
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2 }}
-                className="absolute left-1/2 top-0 h-[800px] w-[800px] -translate-x-1/2 rounded-full bg-[#718355]/15 blur-[200px] pointer-events-none" 
+                className="absolute left-1/2 top-0 h-200 w-200 -translate-x-1/2 rounded-full bg-[#718355]/15 blur-[200px] pointer-events-none" 
             />
             <motion.div 
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2, delay: 0.5 }}
-                className="absolute bottom-0 right-0 h-[600px] w-[600px] translate-x-1/3 translate-y-1/3 rounded-full bg-[#CFE1B9]/10 blur-[150px] pointer-events-none" 
+                className="absolute bottom-0 right-0 h-150 w-150 translate-x-1/3 translate-y-1/3 rounded-full bg-[#CFE1B9]/10 blur-[150px] pointer-events-none" 
             />
 
             <div className="relative z-10 mx-auto w-[90%] max-w-7xl pt-32 sm:pt-40">
@@ -61,7 +61,7 @@ export default function AboutPage() {
                     
                     <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-black leading-tight mb-8">
                         Redefining the <br />
-                        <span className="bg-gradient-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent">
+                        <span className="bg-linear-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent">
                             Digital Art World
                         </span>
                     </motion.h1>
@@ -79,7 +79,7 @@ export default function AboutPage() {
                 >
                     <motion.div variants={fadeInUp}>
                         <h2 className="text-3xl md:text-5xl font-bold mb-6">The Gallery of the <span className="text-[#CFE1B9]">Future.</span></h2>
-                        <div className="w-20 h-1 bg-gradient-to-r from-[#CFE1B9] to-[#718355] rounded-full mb-8"></div>
+                        <div className="w-20 h-1 bg-linear-to-r from-[#CFE1B9] to-[#718355] rounded-full mb-8"></div>
                     </motion.div>
                     
                     <motion.div variants={fadeInUp} className="space-y-6 text-gray-400 text-lg leading-relaxed">
@@ -108,7 +108,7 @@ export default function AboutPage() {
                             key={idx} variants={cardScaleUp}
                             className="rounded-[2rem] border border-[#CFE1B9]/10 bg-white/5 p-8 text-center backdrop-blur-xl hover:bg-white/10 transition-colors duration-300"
                         >
-                            <h3 className="text-4xl md:text-5xl font-black bg-gradient-to-br from-white to-[#97A97C] bg-clip-text text-transparent mb-2">
+                            <h3 className="text-4xl md:text-5xl font-black bg-linear-to-br from-white to-[#97A97C] bg-clip-text text-transparent mb-2">
                                 {stat.value}
                             </h3>
                             <p className="text-sm md:text-base font-medium text-gray-400 uppercase tracking-wider">
@@ -158,7 +158,7 @@ export default function AboutPage() {
                     className="relative rounded-[3rem] overflow-hidden border border-[#CFE1B9]/20 bg-[#1A1D16] py-20 px-8 text-center"
                 >
                     {/* Inner CTA Glow */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#718355]/20 pointer-events-none"></div>
+                    <div className="absolute inset-0 bg-linear-to-b from-transparent to-[#718355]/20 pointer-events-none"></div>
                     
                     <div className="relative z-10 max-w-2xl mx-auto">
                         <h2 className="text-4xl md:text-5xl font-black mb-6">Ready to join the movement?</h2>

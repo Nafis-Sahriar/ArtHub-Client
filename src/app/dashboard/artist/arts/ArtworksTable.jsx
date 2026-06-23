@@ -50,7 +50,7 @@ const ArtworksTable = ({ artworks }) => {
     return (
         <Table aria-label="Artist artworks management table" className="mt-4 shadow-sm border border-[#CFE1B9]/50 rounded-2xl">
             <Table.ResizableContainer>
-                <Table.Content className="min-w-[800px]">
+                <Table.Content className="min-w-200">
                     <Table.Header>
                         <Table.Column isRowHeader defaultWidth="2.5fr" id="artwork" minWidth={250}>
                             Artwork Details

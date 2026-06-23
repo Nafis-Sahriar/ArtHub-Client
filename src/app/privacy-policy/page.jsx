@@ -35,8 +35,8 @@ export default function PrivacyPolicyPage() {
         <div className="relative min-h-screen overflow-hidden bg-[#11140E] text-white pt-28 pb-24 selection:bg-[#CFE1B9] selection:text-[#11140E]">
             
             
-            <div className="absolute left-1/2 top-0 h-[600px] w-[800px] -translate-x-1/2 rounded-full bg-[#718355]/15 blur-[180px] pointer-events-none" />
-            <div className="absolute bottom-0 right-0 h-[500px] w-[500px] translate-x-1/3 translate-y-1/3 rounded-full bg-[#CFE1B9]/10 blur-[150px] pointer-events-none" />
+            <div className="absolute left-1/2 top-0 h-150 w-200 -translate-x-1/2 rounded-full bg-[#718355]/15 blur-[180px] pointer-events-none" />
+            <div className="absolute bottom-0 right-0 h-125 w-125 translate-x-1/3 translate-y-1/3 rounded-full bg-[#CFE1B9]/10 blur-[150px] pointer-events-none" />
 
             <div className="relative z-10 mx-auto w-[90%] max-w-4xl">
                 
@@ -55,7 +55,7 @@ export default function PrivacyPolicyPage() {
                     </div>
 
                     <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight mb-4">
-                        Privacy <span className="bg-gradient-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent">Policy</span>
+                        Privacy <span className="bg-linear-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent">Policy</span>
                     </h1>
 
                     <p className="text-gray-400 text-sm sm:text-base font-medium">

@@ -60,7 +60,7 @@ export default function TopArtists() {
                     {isLoading ? (
                        
                         Array(3).fill(0).map((_, i) => (
-                            <div key={i} className="w-full md:w-[300px] bg-[#F4F7F0] rounded-[2rem] p-8 flex flex-col items-center animate-pulse border border-[#CFE1B9]/50">
+                            <div key={i} className="w-full md:w-75 bg-[#F4F7F0] rounded-[2rem] p-8 flex flex-col items-center animate-pulse border border-[#CFE1B9]/50">
                                 <div className="w-24 h-24 bg-white rounded-full mb-4"></div>
                                 <div className="w-32 h-6 bg-white rounded-md mb-2"></div>
                                 <div className="w-20 h-4 bg-white rounded-md"></div>
@@ -80,7 +80,7 @@ export default function TopArtists() {
                             return (
                                 <div 
                                     key={artist.artistId} 
-                                    className="w-full md:w-[300px] relative bg-white rounded-[2rem] p-8 flex flex-col items-center border border-[#CFE1B9]/50 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group"
+                                    className="w-full md:w-75 relative bg-white rounded-[2rem] p-8 flex flex-col items-center border border-[#CFE1B9]/50 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group"
                                 >
                                     
                                     <div className={`absolute -top-4 shadow-sm border px-4 py-1 rounded-full text-sm font-black ${rankColors[index] || rankColors[1]}`}>

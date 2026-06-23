@@ -55,7 +55,7 @@ const Navbar = () => {
 
   return (
     // REVERTED to sticky top-0 and standard py-4
-    <nav className="sticky top-0 z-[100] w-full py-4 transition-all duration-300 select-none bg-white/80 backdrop-blur-md">
+    <nav className="sticky top-0 z-100 w-full py-4 transition-all duration-300 select-none bg-white/80 backdrop-blur-md">
       <div className="mx-auto w-[92%] max-w-7xl relative">
         
         <div className="flex h-16 items-center justify-between rounded-[2rem] border border-[#CFE1B9]/80 bg-[#F4F7F0]/90 px-6 shadow-sm backdrop-blur-md transition-all duration-300 hover:border-[#97A97C]/50 hover:bg-[#F4F7F0]/95">
@@ -98,7 +98,7 @@ const Navbar = () => {
             )}
           </div>
 
-          <div className="hidden items-center gap-4 lg:flex min-w-[140px] justify-end">
+          <div className="hidden items-center gap-4 lg:flex min-w-35 justify-end">
             {isPending ? (
               <div className="h-8 w-24 bg-gray-200/60 rounded-full animate-pulse"></div>
             ) : user ? (
@@ -173,9 +173,9 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Menu - Positioned Absolutely relative to the wrapper */}
+  
         {isMenuOpen && (
-          <div className="absolute top-[80px] left-0 w-full rounded-[2rem] border border-[#CFE1B9] bg-[#F4F7F0]/98 p-6 shadow-xl backdrop-blur-xl lg:hidden origin-top animate-in slide-in-from-top-4 fade-in duration-200 z-50">
+          <div className="absolute top-20 left-0 w-full rounded-[2rem] border border-[#CFE1B9] bg-[#F4F7F0]/98 p-6 shadow-xl backdrop-blur-xl lg:hidden origin-top animate-in slide-in-from-top-4 fade-in duration-200 z-50">
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;

@@ -14,7 +14,7 @@ export default function ArtCategories() {
 
     return (
       
-        <section className="py-5 bg-gradient-to-b from-[#F4F7F0] to-[#E9F5DB]/40 relative z-10 w-[90%]  mx-auto rounded-3xl ">
+        <section className="py-5 bg-linear-to-b from-[#F4F7F0] to-[#E9F5DB]/40 relative z-10 w-[90%]  mx-auto rounded-3xl ">
             
           
             <div className="w-[90%] mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

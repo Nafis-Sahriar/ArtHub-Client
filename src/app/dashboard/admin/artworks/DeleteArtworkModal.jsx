@@ -36,7 +36,7 @@ export default function DeleteArtworkModal({ artwork, onDeleteSuccess }) {
             
             <Modal.Backdrop>
                 <Modal.Container>
-                    <Modal.Dialog className="sm:max-w-[400px]">
+                    <Modal.Dialog className="sm:max-w-100">
                         <Modal.CloseTrigger />
                         
                         <Modal.Header>

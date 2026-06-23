@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
-import ArtworkCard from '@/components/artworks/ArtworkCard'; 
+
 import { ChevronLeft, ChevronRight } from '@gravity-ui/icons'; 
+import ArtworkCard from '../artworks/ArtworkCard';
 
 export default function FeaturedSection() {
     const [artworks, setArtworks] = useState([]);
@@ -51,7 +52,7 @@ export default function FeaturedSection() {
                         </p>
                     </div>
                     
-                    <div className="flex items-center gap-3 hidden sm:flex">
+                    <div className=" items-center gap-3 hidden sm:flex">
                         <button 
                             onClick={() => slide('left')}
                             className="w-12 h-12 rounded-full border-2 border-[#CFE1B9] bg-white flex items-center justify-center text-[#718355] hover:bg-[#E9F5DB] hover:text-[#4A5D23] hover:border-[#97A97C] transition-all shadow-sm"
@@ -76,13 +77,13 @@ export default function FeaturedSection() {
                     >
                         {isLoading ? (
                             Array(4).fill(0).map((_, i) => (
-                                <div key={i} className="w-[75vw] sm:w-[260px] md:w-[240px] lg:w-[260px] shrink-0 h-[340px] bg-white border border-[#CFE1B9]/50 rounded-2xl animate-pulse snap-center sm:snap-start"></div>
+                                <div key={i} className="w-[75vw] sm:w-65 md:w-60 lg:w-65 shrink-0 h-85 bg-white border border-[#CFE1B9]/50 rounded-2xl animate-pulse snap-center sm:snap-start"></div>
                             ))
                         ) : (
                             artworks.map((art) => (
                                 <div 
                                     key={art._id} 
-                                    className="w-[75vw] sm:w-[260px] md:w-[240px] lg:w-[260px] shrink-0 snap-center sm:snap-start"
+                                    className="w-[75vw] sm:w-65 md:w-60 lg:w-65 shrink-0 snap-center sm:snap-start"
                                 >
                                     <ArtworkCard artwork={art} />
                                 </div>

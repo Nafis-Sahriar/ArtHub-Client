@@ -104,7 +104,7 @@ export default function MostExpensiveArt() {
                        
                         <div className="mb-8">
                             <p className="text-sm text-gray-400 uppercase tracking-widest mb-1">Valued At</p>
-                            <p className="text-5xl font-bold bg-gradient-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent inline-block">
+                            <p className="text-5xl font-bold bg-linear-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent inline-block">
                                 ${artwork.price?.toLocaleString()}
                             </p>
                         </div>

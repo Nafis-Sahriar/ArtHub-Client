@@ -17,7 +17,7 @@ const ArtworkCard = ({ artwork }) => {
             
           
             <div 
-                className="relative w-full aspect-[4/3] bg-gray-100 cursor-pointer overflow-hidden shrink-0"
+                className="relative w-full aspect-4/3 bg-gray-100 cursor-pointer overflow-hidden shrink-0"
                 onClick={handleNavigate}
             >
                 {artwork.imageUrl ? (

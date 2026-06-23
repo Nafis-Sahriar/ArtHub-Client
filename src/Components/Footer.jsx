@@ -6,22 +6,21 @@ import { FaFacebookF, FaInstagram, FaPinterestP, FaTwitter } from 'react-icons/f
 
 const Footer = () => {
     return (
-        // Changed to dark background with a subtle top border
+     
         <footer className="relative overflow-hidden w-full border-t border-[#CFE1B9]/10 bg-[#11140E] pt-16 pb-8 z-10">
             
-            {/* Ambient Background Glow (Rising from the bottom) */}
-            <div className="absolute left-1/2 bottom-0 h-[300px] w-[800px] -translate-x-1/2 translate-y-1/2 rounded-full bg-[#718355]/15 blur-[120px] pointer-events-none" />
+           
+            <div className="absolute left-1/2 bottom-0 h-75 w-200 -translate-x-1/2 translate-y-1/2 rounded-full bg-[#718355]/15 blur-[120px] pointer-events-none" />
 
             <div className="relative z-10 mx-auto w-[90%] max-w-7xl">
 
-                {/* Main Footer */}
+   
                 <div className="grid grid-cols-1 gap-10 md:grid-cols-3 lg:gap-16">
 
-                    {/* Brand Section */}
                     <div className="flex flex-col gap-4">
                         <Link href="/">
-                            {/* Gradient Text for the Brand */}
-                            <h2 className="text-4xl font-black tracking-tight bg-gradient-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent w-max">
+                       
+                            <h2 className="text-4xl font-black tracking-tight bg-linear-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent w-max">
                                 ArtHub
                             </h2>
                         </Link>
@@ -38,7 +37,7 @@ const Footer = () => {
                         </p>
                     </div>
 
-                    {/* Quick Links */}
+                 
                     <div className="flex flex-col gap-4">
                         <h3 className="text-lg font-bold text-white">
                             Explore
@@ -96,7 +95,7 @@ const Footer = () => {
                         </p>
 
                         <div className="flex items-center gap-4 pt-2">
-                            {/* Glassmorphism Social Icons */}
+                        
                             <Link
                                 href="https://facebook.com"
                                 target="_blank"
@@ -141,10 +140,10 @@ const Footer = () => {
 
                 </div>
 
-                {/* Divider */}
+          
                 <div className="my-8 h-px w-full bg-[#CFE1B9]/10" />
 
-                {/* Bottom Bar */}
+     
                 <div className="flex flex-col items-center justify-between gap-3 md:flex-row">
                     <p className="text-sm text-gray-500">
                         © {new Date().getFullYear()} ArtHub. All rights reserved.

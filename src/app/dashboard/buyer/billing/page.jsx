@@ -45,7 +45,7 @@ const BuyerBillingPage = async () => {
                
                 <div className={`relative overflow-hidden rounded-3xl border p-8 shadow-sm ${
                     isPremium 
-                        ? 'bg-gradient-to-br from-[#718355] to-[#4A5D23] border-[#718355] text-white' 
+                        ? 'bg-linear-to-br from-[#718355] to-[#4A5D23] border-[#718355] text-white' 
                         : 'bg-white border-[#CFE1B9]/50 text-zinc-900'
                 }`}>
                     
@@ -106,7 +106,7 @@ const BuyerBillingPage = async () => {
                         <div 
                             className={`h-full rounded-full transition-all duration-1000 ${
                                 isPremium 
-                                    ? 'bg-gradient-to-r from-yellow-400 to-[#718355]' 
+                                    ? 'bg-linear-to-r from-yellow-400 to-[#718355]' 
                                     : usagePercentage >= 100 
                                         ? 'bg-red-500' 
                                         : 'bg-[#718355]'

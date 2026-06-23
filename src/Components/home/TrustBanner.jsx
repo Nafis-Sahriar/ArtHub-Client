@@ -31,7 +31,7 @@ export default function TrustBanner() {
         <section className="relative overflow-hidden py-16 bg-[#11140E] border-y border-[#CFE1B9]/10 rounded-3xl w-[90%] mx-auto my-10">
             
          
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[200px] w-[800px] rounded-full bg-[#718355]/15 blur-[120px] pointer-events-none" />
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-50 w-200 rounded-full bg-[#718355]/15 blur-[120px] pointer-events-none" />
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 

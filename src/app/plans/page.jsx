@@ -70,7 +70,7 @@ const PricingPage = () => {
                         return (
                             <div
                                 key={idx}
-                                className={`relative border rounded-3xl p-8 flex flex-col min-h-[500px] transition-all duration-300 ${
+                                className={`relative border rounded-3xl p-8 flex flex-col min-h-125 transition-all duration-300 ${
                                     plan.popular
                                         ? 'border-[#718355] bg-[#F9FBF6] shadow-2xl scale-105 z-10'
                                         : 'border-[#CFE1B9] bg-white hover:shadow-lg'
@@ -82,7 +82,7 @@ const PricingPage = () => {
                                     </span>
                                 )}
 
-                                <div className="flex-grow">
+                                <div className="grow">
                                     <div className="mb-4 bg-[#E9F5DB] w-fit p-3 rounded-xl">{plan.icon}</div>
                                     <h3 className="text-2xl font-bold text-gray-800">{plan.name}</h3>
                                     
@@ -90,7 +90,7 @@ const PricingPage = () => {
                                     {isPending ? (
                                         <div className="h-12 w-32 bg-gray-200 animate-pulse rounded-lg my-6"></div>
                                     ) : !user ? (
-                                        <div className="text-sm italic text-gray-500 my-6 flex items-center min-h-[48px]">
+                                        <div className="text-sm italic text-gray-500 my-6 flex items-center min-h-12">
                                             Log in to view pricing
                                         </div>
                                     ) : (
