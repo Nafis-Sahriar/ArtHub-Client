@@ -41,8 +41,10 @@ const Navbar = () => {
 
   const navLinks = [
     { label: 'Home', href: '/' },
+    { label: 'About', href: '/about' },
     { label: 'Browse Artworks', href: '/artworks' },
     { label: 'Plans and Pricing', href: '/plans' },
+    { label: 'Contact', href: '/contact' },
   ];
 
   const dashboardLinks = {

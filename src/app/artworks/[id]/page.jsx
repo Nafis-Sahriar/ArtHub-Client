@@ -89,8 +89,12 @@ const PublicArtworkDetails = async ({ params }) => {
                             <p className="text-4xl font-black text-[#718355] mb-2">
                                 ${artwork.price}
                             </p>
+                           
                             <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider">
                                 Dimensions: <span className="text-gray-800">{artwork.dimensions}</span>
+                            </p>
+                            <p className="text-sm font-semibold mt-2 text-gray-400 uppercase tracking-wider">
+                                Created At: <span className="text-gray-800">{artwork.createdAt}</span>
                             </p>
                         </div>
 
