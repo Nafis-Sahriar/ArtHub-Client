@@ -25,8 +25,8 @@ export default function CommentBox({ artworkId, session, onCommentAdded }) {
         const savedComment = await postComment(newCommentData);
 
         if (savedComment) {
-            onCommentAdded(savedComment); // Pass the new comment up to the section
-            setComment(""); // Clear the box
+            onCommentAdded(savedComment); 
+            setComment(""); 
         }
 
         setIsSubmitting(false);

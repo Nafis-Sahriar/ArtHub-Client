@@ -27,27 +27,27 @@ export default function CommentSection({ artworkId, session }) {
         setComments((prev) => [newComment, ...prev]);
     };
 
-    // --- NEW: Handle Delete ---
+  
     const handleDelete = async (commentId) => {
-        if (!window.confirm("Are you sure you want to delete this comment?")) return;
+     
         
         setIsActionLoading(true);
         const success = await deleteComment(commentId, session.id);
         
         if (success) {
-            // Remove the comment from the UI instantly
+           
             setComments((prev) => prev.filter(c => c._id !== commentId));
         }
         setIsActionLoading(false);
     };
 
-    // --- NEW: Handle Edit Initiation ---
+   
     const startEditing = (comment) => {
         setEditingId(comment._id);
         setEditValue(comment.comment);
     };
 
-    // --- NEW: Handle Edit Save ---
+    
     const handleSaveEdit = async (commentId) => {
         if (!editValue.trim()) return;
         
@@ -55,11 +55,10 @@ export default function CommentSection({ artworkId, session }) {
         const success = await updateComment(commentId, editValue.trim(), session.id);
         
         if (success) {
-            // Update the comment text in the UI instantly
             setComments((prev) => prev.map(c => 
                 c._id === commentId ? { ...c, comment: editValue.trim(), isEdited: true } : c
             ));
-            setEditingId(null); // Close edit mode
+            setEditingId(null); 
         }
         setIsActionLoading(false);
     };
@@ -104,7 +103,7 @@ export default function CommentSection({ artworkId, session }) {
                                             </span>
                                         </div>
                                         
-                                        {/* Action Buttons (Only visible to owner) */}
+                                        
                                         {isOwner && !isCurrentlyEditing && (
                                             <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                                 <button onClick={() => startEditing(c)} className="text-gray-400 hover:text-blue-500 transition-colors" disabled={isActionLoading}>
@@ -117,7 +116,7 @@ export default function CommentSection({ artworkId, session }) {
                                         )}
                                     </div>
 
-                                    {/* Conditional Render: Edit Mode vs View Mode */}
+                                    
                                     {isCurrentlyEditing ? (
                                         <div className="mt-2 flex flex-col gap-2">
                                             <textarea 
@@ -135,7 +134,7 @@ export default function CommentSection({ artworkId, session }) {
                                             </div>
                                         </div>
                                     ) : (
-                                        <p className="text-gray-600 leading-relaxed break-words">
+                                        <p className="text-gray-600 leading-relaxed wrap-break-words">
                                             {c.comment}
                                         </p>
                                     )}
