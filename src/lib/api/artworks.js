@@ -23,20 +23,22 @@ export const getArtistArtworks = async (artistId) => {
 }
 
 export const getArtworkById = async (id) => {
-
     try {
-
         const res = await fetch(`${baseURL}/api/artworks/${id}`, {
             cache: 'no-store'
         });
         
-        if (!res.ok) {
-            throw new Error(`Failed to fetch artwork details`);
+        if (res.status === 404) {
+            return null;
         }
-        
+        if (!res.ok) {
+            console.error(`Server error ${res.status} while fetching artwork`);
+            return null; 
+        }
         return await res.json();
     } catch (error) {
-        console.error("Error fetching artwork by ID:", error);
+        
+        console.error("Network or parsing error fetching artwork by ID:", error);
         return null; 
     }
 }

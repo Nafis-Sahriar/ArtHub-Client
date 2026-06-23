@@ -3,10 +3,12 @@ import { Chip, Button } from '@heroui/react';
 import { ArrowLeft, Edit2 } from 'lucide-react';
 import Link from 'next/link';
 import { getArtworkById } from '@/lib/api/artworks';
+import DeleteArtistArtworkModal from '../../DeleteArtistArtworkModal';
+// Import your new modal! Adjust the path as needed.
+
 
 const ArtworkDetailsPage = async ({ params }) => {
     const { id } = await params; 
-    
     const artwork = await getArtworkById(id);
 
     if (!artwork) {
@@ -23,7 +25,6 @@ const ArtworkDetailsPage = async ({ params }) => {
     return (
         <div className="p-2 sm:p-6 w-full max-w-5xl mx-auto space-y-6">
             
-         
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <Link 
                     href="/dashboard/artist/arts"
@@ -33,26 +34,34 @@ const ArtworkDetailsPage = async ({ params }) => {
                 </Link>
                 
                 <div className="flex gap-3">
-                   
                     {artwork.status === 'sold' ? (
                         <Button 
                             isDisabled
                             className="bg-red-50 text-red-500 font-semibold rounded-xl cursor-not-allowed opacity-80"
                         >
-                            Can not edit sold artwork
+                            Cannot edit or delete sold artwork
                         </Button>
                     ) : (
-                        <Link href={`/dashboard/artist/arts/${id}/edit`}>
-                            <Button className="bg-[#E9F5DB] text-[#718355] hover:bg-[#CFE1B9] font-semibold rounded-xl transition-colors">
-                                <Edit2 size={16} /> Edit Details
-                            </Button>
-                        </Link>
+                        <>
+                            <Link href={`/dashboard/artist/arts/${id}/edit`}>
+                                <Button className="bg-[#E9F5DB] text-[#718355] hover:bg-[#CFE1B9] font-semibold rounded-xl transition-colors">
+                                    <Edit2 size={16} /> Edit Details
+                                </Button>
+                            </Link>
+
+                            {/* NEW: The Delete Modal */}
+                            <DeleteArtistArtworkModal 
+                                artwork={artwork} 
+                                redirectOnSuccess="/dashboard/artist/arts" 
+                            />
+                        </>
                     )}
                 </div>
             </div>
 
+            {/* ... Rest of your details page UI stays exactly the same ... */}
             <div className="bg-white rounded-3xl p-6 md:p-10 shadow-sm border border-[#CFE1B9]/50 flex flex-col md:flex-row gap-10">
-            
+                {/* Image Section */}
                 <div className="w-full md:w-1/2">
                     <div className="rounded-2xl overflow-hidden border-4 border-[#F4F7F0] shadow-md bg-gray-100">
                         <img 
@@ -63,7 +72,7 @@ const ArtworkDetailsPage = async ({ params }) => {
                     </div>
                 </div>
 
-                
+                {/* Details Section */}
                 <div className="w-full md:w-1/2 flex flex-col justify-center">
                     <div className="mb-4">
                         <Chip className="bg-[#E9F5DB] text-[#718355] font-semibold mb-3 capitalize border border-[#CFE1B9]/50">
@@ -97,7 +106,6 @@ const ArtworkDetailsPage = async ({ params }) => {
                         </p>
                     </div>
                 </div>
-
             </div>
         </div>
     );
