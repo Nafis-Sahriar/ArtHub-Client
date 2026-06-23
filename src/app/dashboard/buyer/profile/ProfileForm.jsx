@@ -4,11 +4,11 @@ import { Button } from '@heroui/react';
 import { serverMutation } from '@/lib/core/server'; 
 import { Save, CheckCircle2, AlertCircle, Mail, Crown, Fingerprint, Image as ImageIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { authClient } from '@/lib/auth-client';
 
 
 const ProfileForm = ({ user }) => {
-    // 1. Initialize form state with only the allowed editable fields
-    // Accommodating both 'image' and 'imageUrl' depending on how your auth provider stores it
+    
 
     const router = useRouter();
 
@@ -28,14 +28,23 @@ const ProfileForm = ({ user }) => {
         setStatus({ loading: true, message: '', type: '' });
 
         try {
+
+            await authClient.updateUser({
+                    image: formData.imageUrl,
+                    name: formData.name,
+                })
           
             const result = await serverMutation(`/api/users/${user.id}`, formData, 'PATCH');
             
             if (result.success || result.modifiedCount > 0) {
-                setStatus({ loading: false, message: 'Profile updated successfully! Changes may take a moment to reflect globally.', type: 'success' });
+
+
+                setStatus({ loading:false, message: 'Profile updated successfully! Changes may take a moment to reflect globally.', type: 'success' });
+
+
                 router.refresh(); 
             } else {
-                setStatus({ loading: false, message: 'No changes were made.', type: 'info' });
+                setStatus({ loading:false, message: 'No changes were made.', type: 'info' });
             }
         } catch (error) {
             console.error(error);
