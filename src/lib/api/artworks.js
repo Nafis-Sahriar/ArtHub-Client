@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 import { auth } from "../auth";
 import { authClient } from "../auth-client";
 
-const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000";
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL ;
 
 export const getArtistArtworks = async (artistId) => {
 

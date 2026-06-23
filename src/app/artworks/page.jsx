@@ -1,6 +1,7 @@
 import React from 'react';
 import { getAllAvailableArtworks } from '@/lib/api/artworks';
-import ArtContainer from '@/components/artworks/ArtContainer'; 
+import ArtContainer from '@/Components/artworks/ArtContainer';
+
 
 export const metadata = {
     title: 'Explore Artworks | ArtHub',
