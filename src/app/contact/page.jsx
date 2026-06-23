@@ -66,7 +66,7 @@ export default function ContactPage() {
                     <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#718355]/20 border border-[#718355]/30 text-[#CFE1B9] mb-4 text-xs font-bold uppercase tracking-widest">
                         Direct Support Desk
                     </div>
-                    <h1 className="text-4xl sm:text-6xl font-black tracking-tight mb-4">
+                    <h1 className="text-4xl sm:text-6xl font-black tracking-tight mb-4 italic">
                         We are here to <span className="bg-linear-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent">Help.</span>
                     </h1>
                     <p className="text-gray-400 text-base sm:text-lg">
@@ -105,7 +105,7 @@ export default function ContactPage() {
             
                     <div className="lg:col-span-5 space-y-8">
                         <div>
-                            <h2 className="text-3xl font-black mb-3 text-white">Send a Dispatch</h2>
+                            <h2 className="text-3xl font-black mb-3 text-white">Send a Dispatch now...</h2>
                             <p className="text-gray-400 leading-relaxed text-sm sm:text-base">
                                 Fill out the secure form, or utilize our direct studio channels below. We prioritize active transaction dispatches first.
                             </p>

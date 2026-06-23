@@ -12,21 +12,21 @@ const Banner = () => {
       eyebrow: "Curated Marketplace",
       title: "Discover & Buy Original Art",
       description: "Explore a curated collection of breathtaking paintings, digital art, and sculptures from independent artists worldwide.",
-      imageUrl: "/banner1.jpg"
+      imageUrl: "/banner4.jpg"
     },
     {
       id: 2,
       eyebrow: "Independent Creators",
       title: "Support Emerging Artists",
       description: "Connect directly with creators and bring unique, meaningful masterpieces into your home.",
-      imageUrl: "/banner2.jpg"
+      imageUrl: "/banner6.jpg"
     },
     {
       id: 3,
       eyebrow: "Premium Membership",
       title: "Secure & Seamless Buying",
       description: "Join our premium tiers for exclusive access and enjoy a safe, guaranteed purchasing experience.",
-      imageUrl: "/banner3.jpg"
+      imageUrl: "/banner2.jpg"
     }
   ];
 
@@ -40,7 +40,7 @@ const Banner = () => {
   const prevSlide = () => setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
 
   return (
-    <div className="relative w-full h-125 md:h-150 overflow-hidden bg-black">
+    <div className="relative w-full md:w-[90%] md:rounded-3xl h-125 md:h-150 overflow-hidden bg-black">
 
 
       <div

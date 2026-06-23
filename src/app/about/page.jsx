@@ -25,7 +25,7 @@ export default function AboutPage() {
         visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
     };
 
-    // --- Core Values Data ---
+    
     const coreValues = [
         { icon: Palette, title: "Empowering Creators", desc: "We provide the tools, audience, and zero-friction marketplace artists need to turn their passion into a sustainable career." },
         { icon: ShieldCheck, title: "Verified Authenticity", desc: "Every piece on ArtHub is vetted. Buyers can collect with confidence knowing they are investing in genuine originality." },
@@ -38,7 +38,7 @@ export default function AboutPage() {
     return (
         <div className="relative min-h-screen overflow-hidden bg-[#11140E] text-white selection:bg-[#CFE1B9] selection:text-[#11140E] pb-24">
             
-            {/* --- Ambient Background Glows --- */}
+          
             <motion.div 
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2 }}
                 className="absolute left-1/2 top-0 h-200 w-200 -translate-x-1/2 rounded-full bg-[#718355]/15 blur-[200px] pointer-events-none" 
@@ -50,7 +50,7 @@ export default function AboutPage() {
 
             <div className="relative z-10 mx-auto w-[90%] max-w-7xl pt-32 sm:pt-40">
                 
-                {/* --- 1. HERO SECTION --- */}
+              
                 <motion.div 
                     initial="hidden" animate="visible" variants={staggerContainer}
                     className="text-center max-w-4xl mx-auto mb-32"
@@ -61,7 +61,7 @@ export default function AboutPage() {
                     
                     <motion.h1 variants={fadeInUp} className="text-5xl md:text-7xl font-black leading-tight mb-8">
                         Redefining the <br />
-                        <span className="bg-linear-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent">
+                        <span className="bg-linear-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent italic">
                             Digital Art World
                         </span>
                     </motion.h1>
@@ -72,7 +72,7 @@ export default function AboutPage() {
                 </motion.div>
 
 
-                {/* --- 2. THE VISION (Split Text Section) --- */}
+            
                 <motion.div 
                     initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer}
                     className="grid md:grid-cols-2 gap-12 lg:gap-24 items-center mb-32"
@@ -93,7 +93,7 @@ export default function AboutPage() {
                 </motion.div>
 
 
-                {/* --- 3. PLATFORM STATS --- */}
+              
                 <motion.div 
                     initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
                     className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-32"
@@ -119,7 +119,7 @@ export default function AboutPage() {
                 </motion.div>
 
 
-                {/* --- 4. CORE VALUES GRID --- */}
+            
                 <div className="mb-32">
                     <motion.div 
                         initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}
@@ -152,12 +152,12 @@ export default function AboutPage() {
                 </div>
 
 
-                {/* --- 5. CALL TO ACTION --- */}
+            
                 <motion.div 
                     initial="hidden" whileInView="visible" viewport={{ once: true }} variants={cardScaleUp}
                     className="relative rounded-[3rem] overflow-hidden border border-[#CFE1B9]/20 bg-[#1A1D16] py-20 px-8 text-center"
                 >
-                    {/* Inner CTA Glow */}
+              
                     <div className="absolute inset-0 bg-linear-to-b from-transparent to-[#718355]/20 pointer-events-none"></div>
                     
                     <div className="relative z-10 max-w-2xl mx-auto">

@@ -44,8 +44,8 @@ const plainFilters = {
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
              
                 <div className="mb-12 text-center md:text-left">
-                    <h1 className="text-4xl md:text-5xl font-black mb-4">
-                        Explore <span className="bg-linear-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent">Masterpieces</span>
+                    <h1 className="text-4xl md:text-5xl font-black mb-4 italic">
+                        Explore <span className="bg-linear-to-r italic from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent">Masterpieces</span>
                     </h1>
                     <p className="text-lg text-gray-400 max-w-2xl">
                         Discover original oil paintings, digital art, and sculptures from verified artists.

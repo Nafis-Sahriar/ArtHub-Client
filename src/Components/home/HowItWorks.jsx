@@ -30,10 +30,10 @@ export default function HowItWorks() {
                 
                 {/* --- Section Header --- */}
                 <div className="text-center mb-20">
-                    <h2 className="text-3xl md:text-4xl font-black text-[#11140E] mb-4">
+                    <h2 className="text-3xl md:text-4xl font-black text-[#11140E] mb-4 italic">
                         How It Works
                     </h2>
-                    <p className="text-[#718355] font-medium text-lg max-w-2xl mx-auto">
+                    <p className="text-[#718355] font-medium text-lg max-w-2xl mx-auto leading-relaxed">
                         A seamless, secure journey from discovering an artist to hanging the canvas on your wall.
                     </p>
                 </div>

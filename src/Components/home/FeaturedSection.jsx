@@ -40,10 +40,10 @@ export default function FeaturedSection() {
         <section className="pt-32 pb-20 overflow-hidden relative z-10 w-full">
             <div className="w-[90%] max-w-7xl mx-auto">
                 
-                {/* --- HEADER --- */}
+              
                 <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-8 gap-4">
                     <div>
-                        <h2 className="text-3xl md:text-4xl font-black text-[#11140E] mb-2">
+                        <h2 className="text-3xl md:text-4xl font-black text-[#11140E] mb-2 italic">
                             Featured Masterpieces
                         </h2>
                         <p className="text-[#718355] font-medium text-lg">
@@ -51,7 +51,7 @@ export default function FeaturedSection() {
                         </p>
                     </div>
                     
-                    {/* Desktop Navigation Buttons (Hidden on Mobile/Tablet) */}
+                  
                     <div className="items-center gap-3 hidden lg:flex">
                         <button 
                             onClick={() => slide('left')}

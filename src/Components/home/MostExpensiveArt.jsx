@@ -90,10 +90,10 @@ export default function MostExpensiveArt() {
                         
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#718355]/20 border border-[#718355]/30 text-[#CFE1B9] w-max mb-6">
                             <Sparkles size={16} />
-                            <span className="text-xs font-bold tracking-wide uppercase">Crown Jewel Collection</span>
+                            <span className="text-xs font-bold tracking-wide uppercase italic">Crown Jewel Collection</span>
                         </div>
 
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-4">
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight mb-4 italic">
                             {artwork.title}
                         </h2>
 

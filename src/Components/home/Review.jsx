@@ -36,7 +36,7 @@ export default function Review() {
                 
              
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-black text-[#11140E] mb-4">
+                    <h2 className="text-3xl md:text-4xl font-black text-[#11140E] mb-4 italic">
                         Buyer & Artist&apos;s Voices
                     </h2>
                     <p className="text-[#718355] font-medium text-lg">

@@ -72,18 +72,18 @@ export default function OurServices() {
     return (
         <section className="py-20">
             
-            {/* 90% Island Container */}
+           
             <div className="w-[90%]  mx-auto rounded-3xl bg-linear-to-b from-[#11140E] via-[#181C13] to-[#11140E] p-8 sm:p-12 md:p-16 lg:p-20 border border-[#CFE1B9]/20 shadow-2xl text-white">
                 
-                {/* --- HEADER & TAB CONTROLS --- */}
+               
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
                     <div>
-                        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#718355]/20 border border-[#718355]/30 text-[#CFE1B9] mb-4 text-xs font-bold uppercase tracking-widest">
+                        <div className="inline-flex italic items-center gap-2 px-3.5 py-1 rounded-full bg-[#718355]/20 border border-[#718355]/30 text-[#CFE1B9] mb-4 text-xs font-bold uppercase tracking-widest">
                             Platform Capabilities
                         </div>
                         <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white">
                             Built for <br />
-                            <span className="bg-linear-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent">
+                            <span className="bg-linear-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent italic">
                                 Collectors & Curators
                             </span>
                         </h2>
