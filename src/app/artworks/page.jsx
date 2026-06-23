@@ -12,14 +12,16 @@ export default async function BrowseArtworksPage({ searchParams }) {
     
     const rawFilters = await searchParams;
     
-    const plainFilters = {
-        search: rawFilters?.search || "",
-        category: rawFilters?.category || "all",
-        sort: rawFilters?.sort || "newest",
-        page: rawFilters?.page || 1,
-        perPage: rawFilters?.perPage || 3 
-    };
-    
+  
+const plainFilters = {
+    search: rawFilters?.search || "",
+    category: rawFilters?.category || "all",
+    sort: rawFilters?.sort || "newest",
+    page: rawFilters?.page || 1,
+    perPage: rawFilters?.perPage || 3,
+    minPrice: rawFilters?.minPrice || "", 
+    maxPrice: rawFilters?.maxPrice || ""
+};
     const querySearch = new URLSearchParams({ 
         ...plainFilters, 
          
@@ -36,14 +38,14 @@ export default async function BrowseArtworksPage({ searchParams }) {
         <div className="relative min-h-screen overflow-hidden bg-[#11140E] text-white pt-20 pb-24 selection:bg-[#CFE1B9] selection:text-[#11140E]">
             
        
-            <div className="absolute left-1/2 top-0 h-[800px] w-[800px] -translate-x-1/2 rounded-full bg-[#718355]/20 blur-[180px] pointer-events-none" />
-            <div className="absolute bottom-0 right-0 h-[600px] w-[600px] translate-x-1/3 translate-y-1/3 rounded-full bg-[#CFE1B9]/10 blur-[150px] pointer-events-none" />
+            <div className="absolute left-1/2 top-0 h-200 w-200 -translate-x-1/2 rounded-full bg-[#718355]/20 blur-[180px] pointer-events-none" />
+            <div className="absolute bottom-0 right-0 h-150 w-150 translate-x-1/3 translate-y-1/3 rounded-full bg-[#CFE1B9]/10 blur-[150px] pointer-events-none" />
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
              
                 <div className="mb-12 text-center md:text-left">
                     <h1 className="text-4xl md:text-5xl font-black mb-4">
-                        Explore <span className="bg-gradient-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent">Masterpieces</span>
+                        Explore <span className="bg-linear-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent">Masterpieces</span>
                     </h1>
                     <p className="text-lg text-gray-400 max-w-2xl">
                         Discover original oil paintings, digital art, and sculptures from verified artists.

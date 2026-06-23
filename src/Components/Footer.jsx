@@ -184,7 +184,7 @@ const handleSignUp = () => {
 
                 <div className="flex flex-col items-center justify-between gap-3 md:flex-row">
                     <p className="text-sm text-gray-500">
-                        © {new Date().getFullYear()} ArtHub. All rights reserved.
+                        © {new Date().getFullYear()} ArtHub - All rights reserved.
                     </p>
 
                     <p className="text-sm text-gray-500">

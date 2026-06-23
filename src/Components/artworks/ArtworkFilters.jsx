@@ -3,16 +3,27 @@ import React from "react";
 import { TextField, InputGroup, Select, ListBox } from "@heroui/react";
 import { Magnifier, ChevronDown } from "@gravity-ui/icons";
 
-export default function ArtworkFilters({ 
-  searchQuery, setSearchQuery, 
-  selectedCategory, setSelectedCategory,
-  selectedSort, setSelectedSort 
-}) {
+export default function ArtworkFilters(
+  { 
+  searchQuery, 
+  setSearchQuery, 
+  selectedCategory, 
+  setSelectedCategory,
+  selectedSort, 
+  setSelectedSort,
+  minPrice, 
+  setMinPrice,
+  maxPrice, 
+  setMaxPrice
+}) 
+{
   return (
     <div className="flex flex-col gap-4 bg-white p-6 rounded-[24px] border border-[#CFE1B9]/50 shadow-sm max-w-7xl mx-auto mb-10">
+      
+     
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
         
-     
+        {/* Search Bar */}
         <div className="md:col-span-6">
           <TextField 
             value={searchQuery} 
@@ -32,7 +43,7 @@ export default function ArtworkFilters({
           </TextField>
         </div>
 
-      
+        {/* Medium Selection */}
         <div className="md:col-span-3">
           <span className="text-sm font-medium text-[#718355] block mb-2">Medium</span>
           <Select 
@@ -59,7 +70,7 @@ export default function ArtworkFilters({
           </Select>
         </div>
 
-       
+        {/* Sort Selection */}
         <div className="md:col-span-3">
           <span className="text-sm font-medium text-[#718355] block mb-2">Sort By</span>
           <Select 
@@ -86,6 +97,50 @@ export default function ArtworkFilters({
         </div>
 
       </div>
+
+    
+      <div className="pt-3 border-t border-[#CFE1B9]/30 flex flex-wrap items-center justify-between gap-4">
+         
+         <div className="flex items-center gap-3">
+            <span className="text-xs font-bold text-[#718355] uppercase tracking-wider">
+              Enter Price Range ($) To Filter by Cost :
+            </span>
+
+            
+            <div className="flex items-center gap-1.5 bg-[#F4F7F0] border border-[#CFE1B9] focus-within:border-[#97A97C] rounded-xl px-3 py-1.5 transition-all">
+               <input 
+                  type="number" 
+                  value={minPrice}
+                  onChange={(e) => setMinPrice(e.target.value)}
+                  placeholder="Min"
+                  className="w-20 bg-transparent text-xs text-zinc-900 font-medium outline-none placeholder:text-[#97A97C]"
+               />
+               <span className="text-xs text-[#42670b] font-bold">To </span>
+               <input 
+                  type="number" 
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(e.target.value)}
+                  placeholder="Max"
+                  className="w-20 pl-5 bg-transparent text-xs text-zinc-900 font-medium outline-none placeholder:text-[#97A97C]"
+               />
+            </div>
+         </div>
+
+         {(minPrice || maxPrice) && 
+         (
+            <button
+               onClick={() => { 
+                 setMinPrice(""); 
+                 setMaxPrice(""); 
+               }}
+               className="text-xs font-bold text-red-500 hover:text-red-700 hover:underline transition-colors cursor-pointer"
+            >
+               Clear Price Filter
+            </button>
+         )}
+
+      </div>
+
     </div>
   );
 }
