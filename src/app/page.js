@@ -4,6 +4,7 @@ import FeaturedSection from "@/Components/home/FeaturedSection";
 import HowItWorks from "@/Components/home/HowItWorks";
 import MostExpensiveArt from "@/Components/home/MostExpensiveArt";
 import OurServices from "@/Components/home/OurServices";
+import Review from "@/Components/home/Review";
 import TopArtists from "@/Components/home/TopArtist";
 import TrustBanner from "@/Components/home/TrustBanner";
 import Image from "next/image";
@@ -19,6 +20,8 @@ export default function Home() {
       <HowItWorks></HowItWorks>
       <TrustBanner></TrustBanner>
       <OurServices></OurServices>
+      <Review></Review>
+    
     </div>
   );
 }
