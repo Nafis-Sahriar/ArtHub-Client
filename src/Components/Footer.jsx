@@ -1,25 +1,38 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { FaFacebookF, FaInstagram, FaPinterestP, FaTwitter } from 'react-icons/fa';
+import toast from 'react-hot-toast';
 
 const Footer = () => {
+
+const [email, setEmail] = useState('');
+
+const handleSignUp = () => {
+    if (!email.trim()) {
+        return toast.error('Please enter your email address.');
+    }
+
+    toast.success(
+        'Signed up successfully. You will receive an email shortly.'
+    );
+
+    setEmail('');
+};
+
     return (
-     
         <footer className="relative overflow-hidden w-full border-t border-[#CFE1B9]/10 bg-[#11140E] pt-16 pb-8 z-10">
-            
-           
+
             <div className="absolute left-1/2 bottom-0 h-75 w-200 -translate-x-1/2 translate-y-1/2 rounded-full bg-[#718355]/15 blur-[120px] pointer-events-none" />
 
             <div className="relative z-10 mx-auto w-[90%] max-w-7xl">
 
-   
-                <div className="grid grid-cols-1 gap-10 md:grid-cols-3 lg:gap-16">
+                <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4 lg:gap-16">
 
+                    {/* Brand Section */}
                     <div className="flex flex-col gap-4">
                         <Link href="/">
-                       
                             <h2 className="text-4xl font-black tracking-tight bg-linear-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent w-max">
                                 ArtHub
                             </h2>
@@ -37,7 +50,7 @@ const Footer = () => {
                         </p>
                     </div>
 
-                 
+                    {/* Explore Section */}
                     <div className="flex flex-col gap-4">
                         <h3 className="text-lg font-bold text-white">
                             Explore
@@ -57,8 +70,6 @@ const Footer = () => {
                             >
                                 Featured Artists
                             </Link>
-
-                           
 
                             <Link
                                 href="/about"
@@ -95,7 +106,7 @@ const Footer = () => {
                         </p>
 
                         <div className="flex items-center gap-4 pt-2">
-                        
+
                             <Link
                                 href="https://facebook.com"
                                 target="_blank"
@@ -138,12 +149,39 @@ const Footer = () => {
                         </div>
                     </div>
 
+                    {/* Newsletter Section */}
+                    <div className="flex flex-col gap-4">
+                        <h3 className="text-lg font-bold text-white">
+                            Sign Up Newsletter
+                        </h3>
+
+                        <p className="text-sm leading-relaxed text-gray-400">
+                            Get updates about new artworks, featured artists, and exclusive
+                            collections delivered directly to your inbox.
+                        </p>
+
+                        <div className="flex flex-col gap-3">
+                           <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Enter your email"
+                            className="h-11 w-full rounded-xl border border-[#CFE1B9]/20 bg-white/5 px-4 text-sm text-white outline-none transition-all duration-300 placeholder:text-gray-500 focus:border-[#CFE1B9] focus:ring-2 focus:ring-[#CFE1B9]/20"
+                        />
+
+                          <button
+                            onClick={handleSignUp}
+                            className="h-11 rounded-xl bg-[#CFE1B9] px-5 text-sm font-semibold text-[#11140E] transition-all duration-300 hover:bg-[#BFD6A2]"
+                        >
+                            Sign Up
+                        </button>
+                        </div>
+                    </div>
+
                 </div>
 
-          
                 <div className="my-8 h-px w-full bg-[#CFE1B9]/10" />
 
-     
                 <div className="flex flex-col items-center justify-between gap-3 md:flex-row">
                     <p className="text-sm text-gray-500">
                         © {new Date().getFullYear()} ArtHub. All rights reserved.
