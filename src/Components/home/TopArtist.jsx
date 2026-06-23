@@ -40,7 +40,7 @@ export default function TopArtists() {
     if (!isLoading && artists.length === 0) return null;
 
     return (
-        <section className="py-20">
+        <section id="top-artists" className="py-20">
             <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
                 
           
@@ -74,7 +74,7 @@ export default function TopArtists() {
                             const rankColors = [
                                 'bg-[#E9F5DB] border-[#97A97C] text-[#4A5D23]', 
                                 'bg-gray-50 border-gray-200 text-gray-600',       
-                                'bg-orange-50 border-orange-200 text-orange-700' 
+                                'bg-orange-50 border-orange-200 text-orange-300' 
                             ];
 
                             return (

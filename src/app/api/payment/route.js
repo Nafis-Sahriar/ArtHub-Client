@@ -53,6 +53,7 @@ export async function POST(request) {
         imageUrl: imageUrl,
         artistId: artistId,
         category: category,
+        role: user?.role,
       },
 
       mode: 'payment',

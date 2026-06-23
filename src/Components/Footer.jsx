@@ -65,7 +65,7 @@ const handleSignUp = () => {
                             </Link>
 
                             <Link
-                                href="/"
+                                href="/#top-artists"
                                 className="text-sm font-medium text-gray-400 transition-colors duration-300 hover:text-[#CFE1B9]"
                             >
                                 Featured Artists
