@@ -12,7 +12,7 @@ import {
     PersonFill
 } from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
-import { Users, LayoutDashboard, PlusCircle, History, CreditCardIcon } from "lucide-react";
+import { Users, LayoutDashboard, PlusCircle, History, CreditCardIcon , BadgeQuestionMark, BadgeAlert} from "lucide-react";
 import { FiFileText } from 'react-icons/fi';
 
 export const DashboardSidebar = ({ session }) => {
@@ -28,6 +28,7 @@ export const DashboardSidebar = ({ session }) => {
         { icon: FiFileText, href: "/dashboard/buyer/purchases", label: "Purchase History" },
         { icon: CreditCardIcon, href: "/dashboard/buyer/billing", label: "Subscription & Billing" },
         { icon: PersonFill, href: "/dashboard/buyer/profile", label: "Profile Settings" },
+        { icon: BadgeQuestionMark, href: "/dashboard/buyer/support", label: "Open Support Ticket" },
     ];
 
     const artistNavLinks = [
@@ -37,6 +38,7 @@ export const DashboardSidebar = ({ session }) => {
         { icon: History, href: "/dashboard/artist/sales", label: "Sales History" },
         { icon: Person, href: "/dashboard/artist/profile", label: "Profile Settings" },
         { icon: CreditCardIcon, href: "/dashboard/artist/purchases", label: "My Purchases" },
+        { icon: BadgeQuestionMark, href: "/dashboard/artist/support", label: "Open Support Ticket" },
     ];
 
     const adminNavLinks = [
@@ -44,6 +46,7 @@ export const DashboardSidebar = ({ session }) => {
         { icon: Users, href: "/dashboard/admin/users", label: "Manage Users" },
         { icon: Briefcase, href: "/dashboard/admin/artworks", label: "All Artworks" },
         { icon: CreditCard, href: "/dashboard/admin/transactions", label: "Transactions" },
+        { icon: BadgeAlert, href: "/dashboard/admin/support", label: "Support Desk" },
     ];
 
     const navLinksMap = {
