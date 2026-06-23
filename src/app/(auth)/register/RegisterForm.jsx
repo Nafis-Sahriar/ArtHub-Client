@@ -3,57 +3,105 @@ import React, { useState } from 'react';
 import { Button, Form, Input, Label, TextField, FieldError, Radio, RadioGroup, Description } from "@heroui/react";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
+import { ImagePlus, X, Loader2 } from "lucide-react"; 
 import Link from "next/link";
 import { authClient } from '@/lib/auth-client';
-import { redirect } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 
 const RegisterForm = ({ redirectTo = "/" }) => {
-
+    const router = useRouter();
     const [password, setPassword] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    
+    // Image Upload States
+    const [imagePreview, setImagePreview] = useState(null);
+    const [imageFile, setImageFile] = useState(null);
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImageFile(file);
+            setImagePreview(URL.createObjectURL(file));
+        } else {
+            setImageFile(null);
+            setImagePreview(null);
+        }
+    };
+
+    const handleRemoveImage = () => {
+        setImageFile(null);
+        setImagePreview(null);
+    };
 
     const onSubmit = async (e) => {
         e.preventDefault();
+        setIsSubmitting(true);
 
-        const formData = new FormData(e.target);
-        const userData = Object.fromEntries(formData.entries());
+        try {
+            const formData = new FormData(e.target);
+            const userData = Object.fromEntries(formData.entries());
+            let uploadedImageUrl = "";
 
-        const plan = userData.role === 'buyer' ? 'buyer_free' : 'buyer_free';
-        userData.plan = plan;
+           
+            if (imageFile) {
+                const loadingToast = toast.loading("Uploading profile picture...");
+                const imgData = new FormData();
+                imgData.append("image", imageFile);
+                const imgbbKey = process.env.NEXT_PUBLIC_IMAGE_UPLOAD_API;
 
-        console.log("Form Data Submitted:", userData);
+                const imgRes = await fetch(`https://api.imgbb.com/1/upload?key=${imgbbKey}`, {
+                    method: "POST",
+                    body: imgData,
+                });
 
-        const { data, error } = await authClient.signUp.email({
-            email: userData.email,
-            password: userData.password,
-            name: userData.name,
-            image: userData.imageUrl,
-            role: userData.role || "buyer", 
-            plan: userData.plan
-        });
+                const imgResult = await imgRes.json();
+                toast.dismiss(loadingToast);
 
-        if (data) {
-            redirect(redirectTo);
-        }
-        if (error) {
-            toast.error("Error signing UP, something went wrong.");
+                if (imgResult.success) {
+                    uploadedImageUrl = imgResult.data.display_url;
+                } else {
+                    throw new Error("Failed to upload image securely.");
+                }
+            }
+
+            // 2. Prepare user data
+            const plan = userData.role === 'buyer' ? 'buyer_free' : 'buyer_free';
+            
+            // 3. Send to Auth Client
+            const { data, error } = await authClient.signUp.email({
+                email: userData.email,
+                password: userData.password,
+                name: userData.name,
+                image: uploadedImageUrl, // Pass the newly generated ImgBB URL here!
+                role: userData.role || "buyer", 
+                plan: plan
+            });
+
+            if (data) {
+                router.push(redirectTo);
+            }
+            if (error) {
+                toast.error(error.message || "Error signing up, something went wrong.");
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error(error.message || "Registration failed. Please try again.");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
     const handleGoogleSignUp = async () => {
-
         const data = await authClient.signIn.social({
             provider: "google",
-           
-        })
+        });
 
-       if(data){
-            redirect(redirectTo);
-       }
-       else{
+        if(data){
+            router.push(redirectTo);
+        } else {
             toast.error("Error signing UP with Google, something went wrong.");
-       }
-
+        }
     };
 
     // Unified animation presets
@@ -76,7 +124,7 @@ const RegisterForm = ({ redirectTo = "/" }) => {
         <div>
             <section className="relative min-h-screen overflow-hidden bg-[#11140E] text-white">
 
-                {/* Glowing Accent Shapes */}
+              
                 <motion.div 
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -93,7 +141,7 @@ const RegisterForm = ({ redirectTo = "/" }) => {
                 <div className="relative z-10 mx-auto flex min-h-screen w-[90%] items-center py-12">
                     <div className="grid w-full items-center gap-16 lg:grid-cols-2">
 
-                        {/* Left Section -- Animated Content */}
+                       
                         <div className="hidden lg:block">
                             <motion.div 
                                 initial="hidden"
@@ -103,7 +151,7 @@ const RegisterForm = ({ redirectTo = "/" }) => {
                                 }}
                                 className="max-w-xl"
                             >
-                                <motion.h1 variants={fadeInUp} className="bg-linear-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-5xl font-bold text-transparent">
+                                <motion.h1 variants={fadeInUp} className="bg-linear-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] italic bg-clip-text text-5xl font-bold text-transparent">
                                  ArtHub
                                 </motion.h1>
 
@@ -160,7 +208,7 @@ const RegisterForm = ({ redirectTo = "/" }) => {
                                 </div>
 
                                 <div className="text-center">
-                                    <h2 className="text-3xl font-bold">
+                                    <h2 className="text-3xl font-bold italic">
                                         Create Account
                                     </h2>
                                     <p className="mt-3 text-gray-400">
@@ -169,6 +217,32 @@ const RegisterForm = ({ redirectTo = "/" }) => {
                                 </div>
 
                                 <Form className="mx-auto mt-8 flex w-full flex-col gap-5" onSubmit={onSubmit}>
+                                    
+                                    {/* --- NEW AVATAR UPLOAD SECTION --- */}
+                                    <div className="w-full flex flex-col items-center justify-center mb-2">
+                                        {imagePreview ? (
+                                            <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-[#CFE1B9] group shadow-lg">
+                                                <img src={imagePreview} alt="Avatar Preview" className="w-full h-full object-cover" />
+                                                <button 
+                                                    type="button" 
+                                                    onClick={handleRemoveImage}
+                                                    className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer"
+                                                >
+                                                    <X className="text-white" size={24} />
+                                                </button>
+                                            </div>
+                                        ) : (
+                                            <label className="flex flex-col items-center justify-center w-24 h-24 border-2 border-[#CFE1B9]/30 border-dashed rounded-full cursor-pointer bg-black/20 hover:bg-black/40 hover:border-[#CFE1B9]/60 transition-all">
+                                                <div className="flex flex-col items-center justify-center">
+                                                    <ImagePlus className="w-6 h-6 mb-1 text-[#97A97C]" />
+                                                    <span className="text-[10px] font-semibold text-[#CFE1B9] uppercase tracking-wider">Avatar</span>
+                                                </div>
+                                                <input type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
+                                            </label>
+                                        )}
+                                    </div>
+                                  
+
                                     <TextField isRequired name="name" type="text">
                                         <Label className="text-gray-300 font-semibold mb-2">Name</Label>
                                         <Input placeholder="John Doe" className="text-black" />
@@ -188,12 +262,6 @@ const RegisterForm = ({ redirectTo = "/" }) => {
                                     >
                                         <Label className="text-gray-300 font-semibold mb-2">Email</Label>
                                         <Input placeholder="yourname@example.com" className="text-black" />
-                                        <FieldError />
-                                    </TextField>
-
-                                    <TextField name="imageUrl" type="text">
-                                        <Label className="text-gray-300 font-semibold mb-2">Image URL</Label>
-                                        <Input placeholder="https://example.com/image.jpg" className="text-black" />
                                         <FieldError />
                                     </TextField>
 
@@ -231,7 +299,6 @@ const RegisterForm = ({ redirectTo = "/" }) => {
                                         <FieldError />
                                     </TextField>
 
-                                    {/* FIXED: Using the latest HeroUI nested syntax for Radio elements */}
                                     <div className="flex flex-col gap-4">
                                         <Label className="text-gray-300 font-semibold">Select Role</Label>
                                         <RadioGroup defaultValue="buyer" name="role" orientation="horizontal" className="gap-4">
@@ -266,9 +333,10 @@ const RegisterForm = ({ redirectTo = "/" }) => {
                                     <div className="flex gap-2 my-4">
                                         <Button
                                             type="submit"
+                                            isDisabled={isSubmitting}
                                             className="w-full rounded-xl bg-[#718355] py-6 font-semibold text-white transition-all duration-300 hover:bg-[#87986A]"
                                         >
-                                            Sign Up
+                                            {isSubmitting ? <Loader2 className="animate-spin size-5" /> : "Sign Up"}
                                         </Button>
                                     </div>
 
@@ -284,6 +352,7 @@ const RegisterForm = ({ redirectTo = "/" }) => {
                                                 variant="bordered"
                                                 className="w-full border-[#CFE1B9]/10 bg-white/5 text-white transition-all duration-300 hover:bg-white/10"
                                                 onClick={handleGoogleSignUp}
+                                                isDisabled={isSubmitting}
                                             >
                                                 Google <FcGoogle className="ml-2" />
                                             </Button>

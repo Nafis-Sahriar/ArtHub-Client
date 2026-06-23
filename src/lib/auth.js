@@ -34,6 +34,22 @@ export const auth = betterAuth({
         }
     },
 
+    databaseHooks:{
+        user:{
+            create: {
+                before:(user)=>{
+                    return {
+                        data: {
+                            ...user,
+                            role: user.role||"buyer",
+                            plan: user.plan||"buyer_free",
+                      },
+                   };
+                },
+            },
+        },
+    },
+
     session:{
       cookieCache:{
         enabled:true,

@@ -31,8 +31,9 @@ export default function TopArtists() {
     }, []);
 
     
-    const getInitials = (name) => {
+    const getInitials = (name) =>{
         if (!name) return "A";
+        
         return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
     };
 
