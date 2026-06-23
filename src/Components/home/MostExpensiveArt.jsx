@@ -69,7 +69,7 @@ export default function MostExpensiveArt() {
                
                     <motion.div variants={fadeInUp} className="relative group">
                      
-                        <div className="absolute -inset-1 bg-gradient-to-r from-[#CFE1B9] to-[#718355] rounded-[2rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+                        <div className="absolute -inset-1 bg-linear-to-r from-[#CFE1B9] to-[#718355] rounded-[2rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
                         
                         <div className="relative aspect-[4/3] w-full rounded-[2rem] overflow-hidden border border-[#CFE1B9]/20 bg-[#1A1D16]">
                             <img 

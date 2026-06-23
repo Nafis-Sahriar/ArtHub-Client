@@ -98,7 +98,7 @@ const PublicArtworkDetails = async ({ params }) => {
                             </p>
                         </div>
 
-                        <div className="mb-10 flex-grow">
+                        <div className="mb-10 grow">
                             <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wider mb-3">The Story</h3>
                             <p className="text-gray-600 leading-relaxed whitespace-pre-wrap text-lg">
                                 {artwork.description}

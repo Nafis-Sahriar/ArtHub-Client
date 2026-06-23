@@ -42,7 +42,7 @@ export default function HowItWorks() {
                 <div className="relative">
                     
                     {/* The Connecting Line (Horizontal on Desktop, Vertical on Mobile) */}
-                    <div className="absolute left-9.5 md:left-[16.66%] top-0 md:top-10 bottom-0 md:bottom-auto w-[2px] md:w-[66.66%] md:h-[3px] bg-[#CFE1B9]/40 z-0"></div>
+                    <div className="absolute left-9.5 md:left-[16.66%] top-0 md:top-10 bottom-0 md:bottom-auto w-0.5 md:w-[66.66%] md:h-0.75 bg-[#CFE1B9]/40 z-0"></div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
                         {steps.map((step, index) => {

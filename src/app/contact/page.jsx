@@ -48,8 +48,8 @@ export default function ContactPage() {
         <div className="relative min-h-screen overflow-hidden bg-[#11140E] text-white pt-28 pb-24 selection:bg-[#CFE1B9] selection:text-[#11140E]">
             
             
-            <div className="absolute left-0 top-1/4 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-[#718355]/15 blur-[180px] pointer-events-none" />
-            <div className="absolute bottom-10 right-0 h-[500px] w-[500px] translate-x-1/3 rounded-full bg-[#CFE1B9]/10 blur-[150px] pointer-events-none" />
+            <div className="absolute left-0 top-1/4 h-150 w-150 -translate-x-1/2 rounded-full bg-[#718355]/15 blur-[180px] pointer-events-none" />
+            <div className="absolute bottom-10 right-0 h-125 w-125 translate-x-1/3 rounded-full bg-[#CFE1B9]/10 blur-[150px] pointer-events-none" />
 
             <div className="relative z-10 mx-auto w-[90%] max-w-7xl">
                 
@@ -67,7 +67,7 @@ export default function ContactPage() {
                         Direct Support Desk
                     </div>
                     <h1 className="text-4xl sm:text-6xl font-black tracking-tight mb-4">
-                        We are here to <span className="bg-gradient-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent">Help.</span>
+                        We are here to <span className="bg-linear-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] bg-clip-text text-transparent">Help.</span>
                     </h1>
                     <p className="text-gray-400 text-base sm:text-lg">
                         Behind every digital pixel is a dedicated human team ready to assist your art journey.
@@ -249,7 +249,7 @@ export default function ContactPage() {
 
                                 <button 
                                     type="submit"
-                                    className="w-full bg-gradient-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] text-[#11140E] font-black py-4 rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-base shadow-lg"
+                                    className="w-full bg-linear-to-r from-[#CFE1B9] via-[#97A97C] to-[#718355] text-[#11140E] font-black py-4 rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-base shadow-lg"
                                 >
                                     <span>Transmit Dispatch</span>
                                     <Send size={18} />
