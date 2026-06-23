@@ -26,7 +26,7 @@ export default async function SupportTicketPage() {
     const token = await getAuthToken();
     let initialTickets = [];
 
-    // console.log("token Passing: ", token);
+    
 
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/support/${user.email}`, {
