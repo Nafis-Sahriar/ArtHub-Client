@@ -35,6 +35,14 @@ const ArtworkCard = ({ artwork }) => {
                 <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 bg-white/90 backdrop-blur-sm px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-xs font-semibold text-[#718355] capitalize shadow-xs">
                     {artwork.category}
                 </div>
+
+                {
+                    artwork.status === 'sold' && (
+                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                            <span className="text-white text-lg sm:text-xl font-bold tracking-wide">SOLD</span>
+                        </div>
+                    )
+                }
             </div>
 
             

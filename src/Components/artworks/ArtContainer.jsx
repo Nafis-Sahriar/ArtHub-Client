@@ -13,7 +13,7 @@ export default function ArtContainer({ artworks = [], filters = {}, total = 0 })
 
   const router = useRouter();
 
-  const itemsPerPage = 4;
+  const itemsPerPage = 8;
   const totalItems = total;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 

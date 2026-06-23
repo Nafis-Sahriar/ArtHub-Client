@@ -22,7 +22,7 @@ export default async function BrowseArtworksPage({ searchParams }) {
     
     const querySearch = new URLSearchParams({ 
         ...plainFilters, 
-        status: 'available' 
+         
     });
     const queryString = querySearch.toString();
 
