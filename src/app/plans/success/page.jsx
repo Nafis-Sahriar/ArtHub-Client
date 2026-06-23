@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { CircleCheckFill, Envelope, ArrowLeft } from '@gravity-ui/icons';
 import { createSubscription } from '@/lib/actions/subscriptions';
+import SessionRefresher from '@/Components/billing/SessionRefresher';
+
 
 export default async function Success({ searchParams }) {
     const { session_id } = await searchParams;
@@ -31,10 +33,18 @@ export default async function Success({ searchParams }) {
       }
 
       const result = await createSubscription(subsInfo);
-      console.log("Subscription Creation Result:", result);
+    //   console.log("Subscription Creation Result:", result);
+
+    
+
+    
+    
+    
 
         return (
             <div className="w-full min-h-screen bg-[#F4F7F0] text-[#11140E] flex flex-col justify-center items-center p-6 select-none">
+
+                <SessionRefresher planId={metadata.planId} />
                
                 <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-72 h-72 bg-[#718355]/20 rounded-full blur-[100px] pointer-events-none" />
 

@@ -19,7 +19,8 @@ export const protectedServerFetch = async (path) => {
     const res = await fetch(`${baseURL}${path}`, {
         headers: {
             'Authorization': `Bearer ${token}`
-        }
+        },
+        cache: 'no-store'
     });
     return res.json();
 }

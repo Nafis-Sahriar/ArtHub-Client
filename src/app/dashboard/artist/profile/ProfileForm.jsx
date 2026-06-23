@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@heroui/react';
 import { serverMutation } from '@/lib/core/server';
 import { Save, CheckCircle2, AlertCircle, Mail, Image as ImageIcon } from 'lucide-react';
+import { authClient } from '@/lib/auth-client';
 
 const ArtistProfileForm = ({ user }) => {
     const router = useRouter();
@@ -23,6 +24,10 @@ const ArtistProfileForm = ({ user }) => {
         setStatus({ loading: true, message: '', type: '' });
 
         try {
+            await authClient.updateUser({
+                image: formData.imageUrl,
+                name: formData.name,
+            })
             const result = await serverMutation(`/api/users/${user.id}`, formData, 'PATCH');
             
             if (result.success || result.modifiedCount > 0) {
