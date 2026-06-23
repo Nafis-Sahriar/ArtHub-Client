@@ -7,14 +7,14 @@ import { getPurchasesByBuyer } from '@/lib/api/purchase';
 import { CreditCard, Crown, ShieldCheck, Zap } from 'lucide-react';
 
 const BuyerBillingPage = async () => {
-    // 1. Fetch User Session
+  
     const session = await getUserSession();
     if (!session) {
         redirect('/login');
     }
     const user = session;
 
-    // 2. Fetch Plan & Purchase Data
+   
     const [plan, purchases] = await Promise.all([
         getPlanById(user?.plan || 'buyer_free'),
         getPurchasesByBuyer(user.id)
