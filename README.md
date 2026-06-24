@@ -12,6 +12,12 @@ professional gallery than scrolling through a typical marketplace.
 
 ---
 
+## Live Demo
+You can explore the live demo of ArtHub at [https://arthub-client-teal.vercel.app/](https://arthub-client-teal.vercel.app/).
+
+
+
+
 ## Technology Stack npm Package used
 
 ### Frontend
