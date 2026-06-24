@@ -3,8 +3,9 @@ import React, { useState, useRef } from "react";
 import { Button } from "@heroui/react"; 
 import { ImagePlus, Send, X, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
+import { authClient } from "@/lib/auth-client";
 
-export default function PostComposer({ user, onPostCreated, token }) {
+export default function PostComposer({ user, onPostCreated }) {
     const [content, setContent] = useState("");
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
@@ -39,6 +40,9 @@ export default function PostComposer({ user, onPostCreated, token }) {
 
         setIsPosting(true);
         const loadingToast = toast.loading("Publishing to the lounge...");
+
+         const {data:tokenData} = await authClient.token();
+         const token = tokenData?.token;
 
         try {
             let uploadedImageUrl = null;

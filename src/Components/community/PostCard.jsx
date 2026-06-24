@@ -5,6 +5,7 @@ import { Heart, MessageCircle, Trash2, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 import CommentSection from "./CommentSection";
 import DeleteConfirmModal from "./DeleteConfirmModal";
+import { authClient } from "@/lib/auth-client";
 
 export default function PostCard({ post, user, onPostDeleted }) 
 {
@@ -20,23 +21,28 @@ export default function PostCard({ post, user, onPostDeleted })
     const [likeCount, setLikeCount] = useState(post.likes?.length || 0);
 
     const handleToggleLike = async () => {
+
         if (!user) {
             toast.error("Please log in to like posts.");
             return;
         }
 
-        // 1. Optimistic UI Update (Instant feedback!)
+        
         const previousIsLiked = isLiked;
         const previousCount = likeCount;
 
         setIsLiked(!isLiked);
         setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
 
-        // 2. Background API Call
+        const {data:tokenData} = await authClient.token();
+        const token = tokenData?.token;
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/community/posts/${post._id}/like`, {
                 method: "PATCH",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
                 body: JSON.stringify({ userId: currentUserId })
             });
 
@@ -63,10 +69,16 @@ export default function PostCard({ post, user, onPostDeleted })
     const handleDelete = async () => {
         // if (!window.confirm("Are you sure you want to delete this post?")) return;
 
+         const {data:tokenData} = await authClient.token();
+             const token = tokenData?.token;
+
         setIsDeleting(true);
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/community/posts/${post._id}`, {
                 method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
 
             const result = await res.json();

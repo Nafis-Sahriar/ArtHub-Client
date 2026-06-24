@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Input, Button } from "@heroui/react";
 import { Send, Loader2, MessageSquare } from "lucide-react";
 import toast from "react-hot-toast";
+import { authClient } from "@/lib/auth-client";
 
 export default function CommentSection({ postId, user }) {
     const [comments, setComments] = useState([]);
@@ -43,10 +44,16 @@ export default function CommentSection({ postId, user }) {
             comment: newCommentText.trim(),
         };
 
+         const {data:tokenData} = await authClient.token();
+             const token = tokenData?.token;
+
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/community/posts/${postId}/comments`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
                 body: JSON.stringify(payload),
             });
 
