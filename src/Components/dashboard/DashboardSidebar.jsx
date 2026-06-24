@@ -12,7 +12,7 @@ import {
     PersonFill
 } from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
-import { Users, LayoutDashboard, PlusCircle, History, CreditCardIcon , BadgeQuestionMark, BadgeAlert} from "lucide-react";
+import { Users, LayoutDashboard, PlusCircle, History, CreditCardIcon , BadgeQuestionMark, BadgeAlert, Heart} from "lucide-react";
 import { FiFileText } from 'react-icons/fi';
 
 export const DashboardSidebar = ({ session }) => {
@@ -29,6 +29,7 @@ export const DashboardSidebar = ({ session }) => {
         { icon: CreditCardIcon, href: "/dashboard/buyer/billing", label: "Subscription & Billing" },
         { icon: PersonFill, href: "/dashboard/buyer/profile", label: "Profile Settings" },
         { icon: BadgeQuestionMark, href: "/dashboard/buyer/support", label: "Open Support Ticket" },
+        { icon: Heart, href: "/dashboard/buyer/wishlist", label: "My Wishlist" },
     ];
 
     const artistNavLinks = [
@@ -39,6 +40,7 @@ export const DashboardSidebar = ({ session }) => {
         { icon: Person, href: "/dashboard/artist/profile", label: "Profile Settings" },
         { icon: CreditCardIcon, href: "/dashboard/artist/purchases", label: "My Purchases" },
         { icon: BadgeQuestionMark, href: "/dashboard/artist/support", label: "Open Support Ticket" },
+        { icon: Heart, href: "/dashboard/artist/wishlist", label: "My Wishlist" },
     ];
 
     const adminNavLinks = [

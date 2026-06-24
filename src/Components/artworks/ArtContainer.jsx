@@ -5,7 +5,7 @@ import ArtworkFilters from "./ArtworkFilters";
 import { useRouter } from "next/navigation";
 import { Pagination } from "@heroui/react";
 
-export default function ArtContainer({ artworks=[],filters={},total=0}) 
+export default function ArtContainer({ artworks=[],filters={},total=0,user=null}) 
 {
 
   // amar ekta search query state lagbe. Then Category, set sleected category, sort, last e paginaiton.
@@ -108,6 +108,7 @@ export default function ArtContainer({ artworks=[],filters={},total=0})
                 key={art._id || art.id}
 
                 artwork={art}
+                user={user}
               />
             ))}
           </div>

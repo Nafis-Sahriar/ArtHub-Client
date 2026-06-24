@@ -1,15 +1,20 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from '@gravity-ui/icons'; 
-import ArtworkCard from '../artworks/ArtworkCard';
+// import ArtworkCard from '../artworks/ArtworkCard';
+import FeaturedCard from './FeaturedCard';
 
 export default function FeaturedSection() {
     const [artworks, setArtworks] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const sliderRef = useRef(null);
+    
 
     useEffect(() => {
         const fetchFeatured = async () => {
+
+
+
             try {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/featuredArtworks`, { cache: 'no-store' });
                 const data = await res.json();
@@ -80,7 +85,7 @@ export default function FeaturedSection() {
                         ) : (
                             artworks.slice(0, 6).map((art) => ( 
                                 <div key={art._id} className="w-full">
-                                    <ArtworkCard artwork={art} />
+                                    <FeaturedCard artwork={art} />
                                 </div>
                             ))
                         )}
@@ -107,7 +112,7 @@ export default function FeaturedSection() {
                                     key={art._id} 
                                     className="w-75 shrink-0 snap-start"
                                 >
-                                    <ArtworkCard artwork={art} />
+                                    <FeaturedCard artwork={art} />
                                 </div>
                             ))
                         )}

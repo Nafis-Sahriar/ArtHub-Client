@@ -1,6 +1,7 @@
 import React from 'react';
 import { getAllAvailableArtworks } from '@/lib/api/artworks';
 import ArtContainer from '@/Components/artworks/ArtContainer';
+import { getUserSession } from '@/lib/core/session';
 
 export const metadata = {
     title: 'Explore Artworks | ArtHub',
@@ -9,6 +10,13 @@ export const metadata = {
 export const dynamic = 'force-dynamic'; 
 
 export default async function BrowseArtworksPage({ searchParams }) {
+
+    const TryingToGetUser = await getUserSession(); 
+
+    const user = TryingToGetUser? TryingToGetUser : null;
+
+    
+
     
     const rawFilters = await searchParams;
     
@@ -52,7 +60,7 @@ const plainFilters = {
                     </p>
                 </div>
 
-                <ArtContainer filters={plainFilters} artworks={validArtworks} total={totalCount} />
+                <ArtContainer filters={plainFilters} artworks={validArtworks} total={totalCount} user={user} />
             </div>
         </div>
     );
