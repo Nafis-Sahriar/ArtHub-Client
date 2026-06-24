@@ -45,6 +45,7 @@ const Navbar = () => {
     { label: 'Browse Artworks', href: '/artworks' },
     { label: 'Plans and Pricing', href: '/plans' },
     { label: 'Contact', href: '/contact' },
+    { label: 'ArtHub Community', href: '/community' },
   ];
 
   const dashboardLinks = {
