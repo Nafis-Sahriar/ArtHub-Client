@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@heroui/react';
 import { Image as ImageIcon, ShoppingCart, Eye, Heart } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { authClient } from '@/lib/auth-client';
 
 const ArtworkCard = ({ artwork, user }) => {
     const router = useRouter();
@@ -19,10 +20,16 @@ const ArtworkCard = ({ artwork, user }) => {
    
     useEffect(() => {
         const checkStatus = async () => {
+             const {data:tokenData} = await authClient.token();
+             const token = tokenData?.token;
             if (!user) return; 
             try {
                 const currentUserId = user.id || user._id;
-                const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/wishlist/check/${artwork._id}?userId=${currentUserId}`);
+                const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/wishlist/check/${artwork._id}?userId=${currentUserId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
                 if (res.ok) {
                     const data = await res.json();
                     setIsWishlisted(data.isWishlisted);
@@ -37,6 +44,9 @@ const ArtworkCard = ({ artwork, user }) => {
    
     const handleWishlist = async (e) => {
         e.stopPropagation(); 
+
+        const {data:tokenData} = await authClient.token();
+        const token = tokenData?.token;
 
         if (!user) {
             toast.error("Please log in to add to your wishlist.");
@@ -54,7 +64,10 @@ const ArtworkCard = ({ artwork, user }) => {
 
             const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/wishlist/toggle`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
                 body: JSON.stringify(
                 { 
                     userId: currentUserId, 
@@ -70,6 +83,7 @@ const ArtworkCard = ({ artwork, user }) => {
                 toast.error(data.message || "Failed to update wishlist");
             } else {
                 toast.success(data.message);
+                router.refresh();
             }
         } 
         catch (error) 

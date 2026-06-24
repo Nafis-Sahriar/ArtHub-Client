@@ -5,6 +5,7 @@ import { serverFetch } from '@/lib/core/server';
 import StatsCards from '@/Components/dashboard/StatsCard'; 
 import CollectionGallery from './CollectionGallery';
 import { Palette, CreditCard, Bookmark, Crown } from 'lucide-react'; 
+import { authClient } from '@/lib/auth-client';
 
 const BuyerDashboardHomePage = async () => 
     {
@@ -14,11 +15,22 @@ const BuyerDashboardHomePage = async () =>
         redirect('/login');
     } 
 
+     const {data:tokenData} = await authClient.token();
+     const token = tokenData?.token;
+
     const currentUserId = user?.id || user?._id;
 
     const [collection, wishlistRes] = await Promise.all([
-        serverFetch(`/api/purchases?buyerId=${currentUserId}`),
-        serverFetch(`/api/wishlist/count/${currentUserId}`)
+        serverFetch(`/api/purchases?buyerId=${currentUserId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }),
+        serverFetch(`/api/wishlist/count/${currentUserId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
     ]);
     
     const wishlistCount = wishlistRes?.count || 0;

@@ -1,6 +1,8 @@
 import React from 'react';
 import { getUserSession } from '@/lib/core/session'; 
 import WishlistGrid from '@/Components/dashboard/WishlistGrid';
+import { authClient } from '@/lib/auth-client';
+import { getAuthToken } from '@/lib/core/server';
 
 export const metadata = {
     title: 'My Wishlist | ArtHub',
@@ -9,16 +11,24 @@ export const metadata = {
 export default async function WishlistPage() {
   
     const user = await getUserSession();
-    
-   
+
+    const token = await getAuthToken(); // Fetch the token using the new function
+
+    console.log("Fetched token:", token); // Debugging line to check if the token is fetched correctly
+
     if (!user) return null; 
 
     const currentUserId = user.id || user._id;
     let wishlistItems = [];
 
+    // Debugging line to check if the token is fetched correctly
+
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/wishlist/user/${currentUserId}`, {
-            cache: 'no-store' 
+            cache: 'no-store' ,
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
         });
 
         if (res.ok) {

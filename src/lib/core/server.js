@@ -5,7 +5,7 @@ import { auth } from "../auth";
 
 const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
-const getAuthToken = async () => {
+export const getAuthToken = async () => {
     const authData = await auth.api.getToken({
         headers: await headers()
     });

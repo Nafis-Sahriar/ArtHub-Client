@@ -1,24 +1,29 @@
 import React from 'react';
 import { getUserSession } from '@/lib/core/session'; 
 import WishlistGrid from '@/Components/dashboard/WishlistGrid';
+import { getAuthToken } from '@/lib/core/server';
 
 export const metadata = {
     title: 'My Wishlist | ArtHub',
 };
 
+
 export default async function WishlistPage() {
   
     const user = await getUserSession();
     
+    const token= await getAuthToken(); // Fetch the token using the new function
 
     if (!user) return null; 
 
     const currentUserId = user.id || user._id;
     let wishlistItems = [];
-
   
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/wishlist/user/${currentUserId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
             cache: 'no-store' 
         });
 
