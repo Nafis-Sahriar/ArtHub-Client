@@ -6,35 +6,37 @@ import StatsCards from '@/Components/dashboard/StatsCard';
 import CollectionGallery from './CollectionGallery';
 import { Palette, CreditCard, Bookmark, Crown } from 'lucide-react'; 
 
-const BuyerDashboardHomePage = async () => {
- 
+const BuyerDashboardHomePage = async () => 
+    {
     const user = await getUserSession();
+
     if (!user) {
         redirect('/login');
     } 
 
+    const currentUserId = user?.id || user?._id;
+
+    const [collection, wishlistRes] = await Promise.all([
+        serverFetch(`/api/purchases?buyerId=${currentUserId}`),
+        serverFetch(`/api/wishlist/count/${currentUserId}`)
+    ]);
     
-    const collection = await serverFetch(`/api/purchases?buyerId=${user?.id}`);
-    
-  
+    const wishlistCount = wishlistRes?.count || 0;
     const totalInvested = collection.reduce((acc, purchase) => acc + (Number(purchase.price) || 0), 0);
     
-   
     const crownJewel = collection.length > 0 
         ? Math.max(...collection.map(item => Number(item.price) || 0)) 
         : 0;
 
-   
     const buyerStats = [
         { title: "Artworks Collected", value: collection.length, icon: Palette },
         { title: "Total Invested", value: `$${totalInvested.toLocaleString()}`, icon: CreditCard },
-        { title: "Saved to Wishlist", value: "0", icon: Bookmark }, 
+        { title: "Saved to Wishlist", value: wishlistCount, icon: Bookmark }, 
         { title: "Highest Valued Piece", value: `$${crownJewel.toLocaleString()}`, icon: Crown }, 
     ];
 
     return (
         <div className="space-y-8 max-w-7xl mx-auto">
-           
             <div>
                 <h1 className="text-3xl font-extrabold text-zinc-900 mb-2">
                     Welcome back, {user?.name?.split(' ')[0] || "Collector"}!
@@ -44,12 +46,10 @@ const BuyerDashboardHomePage = async () => {
                 </p>
             </div>
 
-         
             <div>
                 <StatsCards stats={buyerStats} /> 
             </div>
 
-            
             <div className="pt-8 border-t border-[#CFE1B9]/30">
                 <div className="mb-6 flex justify-between items-end">
                     <div>
@@ -58,7 +58,6 @@ const BuyerDashboardHomePage = async () => {
                     </div>
                 </div>
                 
-              
                 <CollectionGallery collection={collection} />
             </div>
         </div>
