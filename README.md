@@ -182,5 +182,5 @@ For the **Future Improvements & Upcoming Features** section, keep the features r
 
 
 # Conclusion
-ArtHub is more than just a marketplace; it's a platform designed to empower artists and connect them with collectors in a meaningful way. By focusing on user experience, security, and community-building features, ArtHub aims to create a vibrant ecosystem where creativity can thrive and art lovers can easily discover and collect unique pieces. With ongoing improvements and new features on the horizon, ArtHub is poised to become a go-to destination for artists and collectors alike.
+ArtHub is more than just a marketplace; it's a platform designed to empower artists and connect them with collectors in a meaningful way. By focusing on user experience, security, and community-building features, ArtHub aims to create a vibrant ecosystem where creativity can thrive and art lovers can easily discover and collect unique pieces. With ongoing improvements and new features on the horizon, ArtHub is poised to become a go-to destination for artists and collectors .
 
