@@ -70,10 +70,10 @@ export default function OurServices() {
         : services.filter(s => s.target === activeTab);
 
     return (
-        <section className="py-20">
+        <section className="py-20 w-[90%]  mx-auto">
             
            
-            <div className="w-[90%]  mx-auto rounded-3xl bg-linear-to-b from-[#11140E] via-[#181C13] to-[#11140E] p-8 sm:p-12 md:p-16 lg:p-20 border border-[#CFE1B9]/20 shadow-2xl text-white">
+            <div className=" rounded-3xl bg-linear-to-b from-[#11140E] via-[#181C13] to-[#11140E] p-8 sm:p-12 md:p-16 lg:p-20 border border-[#CFE1B9]/20 shadow-2xl text-white">
                 
                
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
@@ -90,7 +90,7 @@ export default function OurServices() {
                     </div>
 
                     {/* Interactive Role Toggle */}
-                    <div className="flex items-center bg-white/5 border border-white/10 p-1.5 rounded-2xl w-max">
+                    <div className="flex items-center bg-white/5 border border-white/10 p-1.5 rounded-2xl ">
                         <button 
                             onClick={() => setActiveTab('all')}
                             className={`px-4 sm:px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 ${activeTab === 'all' ? 'bg-[#718355] text-white shadow-md' : 'text-gray-400 hover:text-white'}`}

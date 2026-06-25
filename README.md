@@ -184,3 +184,173 @@ For the **Future Improvements & Upcoming Features** section, keep the features r
 # Conclusion
 ArtHub is more than just a marketplace; it's a platform designed to empower artists and connect them with collectors in a meaningful way. By focusing on user experience, security, and community-building features, ArtHub aims to create a vibrant ecosystem where creativity can thrive and art lovers can easily discover and collect unique pieces. With ongoing improvements and new features on the horizon, ArtHub is poised to become a go-to destination for artists and collectors alike.
 
+
+# Folder Structure
+
+src/
+├── app/
+│   ├── error.js
+│   ├── globals.css
+│   ├── layout.js
+│   ├── loading.js
+│   ├── not-found.js
+│   ├── page.js
+│   ├── (auth)/
+│   │   ├── login/
+│   │   │   ├── LoginForm.jsx
+│   │   │   └── page.jsx
+│   │   └── register/
+│   │       ├── page.jsx
+│   │       └── RegisterForm.jsx
+│   ├── about/
+│   │   └── page.jsx
+│   ├── api/
+│   │   ├── auth/
+│   │   │   └── [...all]/
+│   │   │       └── route.js
+│   │   ├── checkout_sessions/
+│   │   │   └── route.js
+│   │   └── payment/
+│   │       └── route.js
+│   ├── artworks/
+│   │   ├── loading.js
+│   │   ├── page.jsx
+│   │   └── [id]/
+│   │       ├── loading.js
+│   │       ├── page.jsx
+│   │       └── buy/
+│   │           ├── BuynowForm.jsx
+│   │           └── page.jsx
+│   ├── community/
+│   │   └── page.jsx
+│   ├── contact/
+│   │   └── page.jsx
+│   ├── dashboard/
+│   │   ├── layout.js
+│   │   ├── loading.js
+│   │   ├── admin/
+│   │   │   ├── AnalyticsCharts.jsx
+│   │   │   ├── layout.js
+│   │   │   ├── loading.js
+│   │   │   ├── page.jsx
+│   │   │   ├── StatsCards.jsx
+│   │   │   ├── artworks/
+│   │   │   │   ├── ArtworksTable.jsx
+│   │   │   │   ├── DeleteArtworkModal.jsx
+│   │   │   │   └── page.jsx
+│   │   │   ├── support/
+│   │   │   │   └── page.jsx
+│   │   │   ├── transactions/
+│   │   │   │   ├── page.jsx
+│   │   │   │   └── TransactionHistoryTable.jsx
+│   │   │   └── users/
+│   │   │       ├── page.jsx
+│   │   │       └── UsersTable.jsx
+│   │   ├── artist/
+│   │   │   ├── ArtistGallery.jsx
+│   │   │   ├── DeleteArtistArtworkModal.jsx
+│   │   │   ├── layout.js
+│   │   │   ├── loading.js
+│   │   │   ├── page.jsx
+│   │   │   ├── arts/
+│   │   │   │   ├── ArtworksTable.jsx
+│   │   │   │   ├── page.jsx
+│   │   │   │   ├── new/
+│   │   │   │   │   ├── page.jsx
+│   │   │   │   │   └── PostArtForm.jsx
+│   │   │   │   └── [id]/
+│   │   │   │       ├── page.jsx
+│   │   │   │       └── edit/
+│   │   │   │           └── page.jsx
+│   │   │   ├── profile/
+│   │   │   │   ├── page.jsx
+│   │   │   │   └── ProfileForm.jsx
+│   │   │   ├── purchases/
+│   │   │   │   ├── page.jsx
+│   │   │   │   └── PurchaseTable.jsx
+│   │   │   ├── sales/
+│   │   │   │   └── page.jsx
+│   │   │   ├── support/
+│   │   │   │   └── page.jsx
+│   │   │   └── wishlist/
+│   │   │       └── page.jsx
+│   │   └── buyer/
+│   │       ├── CollectionGallery.jsx
+│   │       ├── layout.js
+│   │       ├── loading.js
+│   │       ├── page.jsx
+│   │       ├── billing/
+│   │       │   └── page.jsx
+│   │       ├── profile/
+│   │       │   ├── page.jsx
+│   │       │   └── ProfileForm.jsx
+│   │       ├── purchases/
+│   │       │   ├── page.jsx
+│   │       │   └── PurchaseTable.jsx
+│   │       ├── support/
+│   │       │   └── page.jsx
+│   │       └── wishlist/
+│   │           └── page.jsx
+│   ├── plans/
+│   │   ├── page.jsx
+│   │   ├── payment-success/
+│   │   │   └── page.jsx
+│   │   └── success/
+│   │       └── page.jsx
+│   ├── privacy-policy/
+│   │   └── page.jsx
+│   └── unauthorized/
+│       └── page.jsx
+├── Components/
+│   ├── Banner.jsx
+│   ├── Footer.jsx
+│   ├── Navbar.jsx
+│   ├── artworks/
+│   │   ├── ArtContainer.jsx
+│   │   ├── ArtworkCard.jsx
+│   │   ├── ArtworkFilters.jsx
+│   │   ├── CommentBox.jsx
+│   │   └── CommentSection.jsx
+│   ├── billing/
+│   │   └── SessionRefresher.jsx
+│   ├── community/
+│   │   ├── CommentSection.jsx
+│   │   ├── CommunityComingSoon.jsx
+│   │   ├── CommunityFeed.jsx
+│   │   ├── DeleteConfirmModal.jsx
+│   │   ├── PostCard.jsx
+│   │   └── PostComposer.jsx
+│   ├── dashboard/
+│   │   ├── DashboardSidebar.jsx
+│   │   ├── StatsCard.jsx
+│   │   └── WishlistGrid.jsx
+│   ├── home/
+│   │   ├── ArtCategoryGrid.jsx
+│   │   ├── FeaturedCard.jsx
+│   │   ├── FeaturedSection.jsx
+│   │   ├── HowItWorks.jsx
+│   │   ├── MostExpensiveArt.jsx
+│   │   ├── OurServices.jsx
+│   │   ├── Review.jsx
+│   │   ├── TopArtist.jsx
+│   │   └── TrustBanner.jsx
+│   └── support/
+│       ├── AdminSupportDesk.jsx
+│       ├── SupportTicketContainer.jsx
+│       └── SupportTicketForm.jsx
+└── lib/
+    ├── auth-client.js
+    ├── auth.js
+    ├── stripe.js
+    ├── actions/
+    │   ├── artworks.js
+    │   ├── purchase.js
+    │   └── subscriptions.js
+    ├── api/
+    │   ├── artworks.js
+    │   ├── comments.js
+    │   ├── plans.js
+    │   └── purchase.js
+    └── core/
+        ├── server.js
+        └── session.js
